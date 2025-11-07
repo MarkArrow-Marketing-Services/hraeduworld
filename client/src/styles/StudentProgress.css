@@ -1,0 +1,6 @@
+.student-progress-container{padding:20px}
+.progress-panel{max-width:720px}
+.progress-summary{margin-bottom:12px}
+.quiz-table{overflow-x:auto}
+.quiz-table table{width:100%;border-collapse:collapse}
+.quiz-table th,.quiz-table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:left}

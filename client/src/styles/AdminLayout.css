@@ -1,0 +1,241 @@
+/* ===========================================================
+   🌙 Admin Layout – Modern Dark Glassmorphism Theme
+   =========================================================== */
+
+/* Root container */
+.admin-root {
+  display: block;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 20%, #101216, #0a0c10);
+  color: var(--muted);
+  font-family: "Inter", "Poppins", sans-serif;
+}
+
+/* Navbar height variable for consistent spacing */
+:root {
+  --admin-navbar-height: var(--navbar-height, 64px);
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-light: rgba(255, 255, 255, 0.06);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --text-muted: #b0b3c2;
+  --text-light: #e5e7eb;
+}
+
+/* Main area */
+.admin-main {
+  padding: 28px;
+  min-height: calc(100vh - var(--admin-navbar-height));
+  margin-top: var(--admin-navbar-height);
+  box-sizing: border-box;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.3s ease;
+}
+
+/* Container for content */
+.admin-container {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 28px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  transition: all 0.3s ease;
+}
+
+/* Headings */
+.admin-main h1,
+.admin-main h2,
+.admin-main h3 {
+  color: var(--text-light);
+  font-weight: 600;
+  margin-bottom: 14px;
+  letter-spacing: 0.3px;
+}
+
+/* Card design */
+.admin-main .card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-main .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px rgba(2, 6, 23, 0.7);
+}
+
+/* Input fields */
+.admin-main form input[type="text"],
+.admin-main form input[type="email"],
+.admin-main form input[type="password"],
+.admin-main form select,
+.admin-main form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: rgba(255,255,255,0.02);
+  color: var(--text-light);
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.admin-main form input:focus,
+.admin-main form select:focus,
+.admin-main form textarea:focus {
+  border-color: var(--accent-3);
+  outline: none;
+  background: rgba(255,255,255,0.04);
+}
+
+/* Ensure form inputs inside admin area always have high-contrast text and caret
+   (some global rules or browser autofill could make typed text hard to read) */
+.admin-main form input[type="text"],
+.admin-main form input[type="email"],
+.admin-main form input[type="password"] {
+  color: var(--text-light) !important;
+  -webkit-text-fill-color: var(--text-light) !important; /* Chrome/Safari */
+  background: rgba(255,255,255,0.02) !important;
+  caret-color: var(--accent-3) !important;
+}
+
+/* Placeholder should be muted but readable */
+.admin-main form input::placeholder {
+  color: rgba(229,231,235,0.7) !important;
+}
+
+/* Autofill overrides (Chrome) */
+.admin-main form input:-webkit-autofill,
+.admin-main form input:-webkit-autofill:focus,
+.admin-main form input:-webkit-autofill:hover {
+  -webkit-text-fill-color: var(--text-light) !important;
+  box-shadow: 0 0 0px 1000px rgba(255,255,255,0.02) inset !important;
+  background-clip: padding-box;
+}
+
+/* Form buttons */
+.admin-main form button {
+  background: linear-gradient(90deg, var(--accent-3), var(--accent-2));
+  color: #fff;
+  border: none;
+  padding: 11px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 16px rgba(92, 95, 199, 0.2);
+}
+
+.admin-main form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(92, 95, 199, 0.35);
+}
+
+/* List/Item cards */
+.admin-main .unit-card,
+.admin-main .student-item,
+.admin-main .quiz-item {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border-color);
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.admin-main .unit-card:hover,
+.admin-main .student-item:hover,
+.admin-main .quiz-item:hover {
+  background: rgba(255,255,255,0.04);
+  transform: translateY(-2px);
+}
+
+/* Sidebar styles (if used) */
+.admin-sidebar h3 {
+  margin-top: 0;
+  color: var(--text-muted);
+}
+
+.admin-sidebar nav a {
+  display: block;
+  padding: 8px 0;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.admin-sidebar nav a:hover {
+  background: rgba(255,255,255,0.04);
+  color: var(--text-light);
+}
+
+/* ===========================================================
+   📱 Responsive Design (Tablet & Mobile)
+   =========================================================== */
+
+@media (max-width: 1024px) {
+  .admin-main {
+    padding: 20px;
+  }
+
+  .admin-container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-main {
+    margin-top: calc(var(--admin-navbar-height) - 10px);
+    padding: 16px;
+  }
+
+  .admin-container {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .admin-main h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  /* Mobile app–like UI layout */
+  .admin-main {
+    padding: 14px;
+    margin-top: calc(var(--admin-navbar-height) - 12px);
+  }
+
+  .admin-container {
+    padding: 16px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+  }
+
+  .admin-main form button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .admin-main form input,
+  .admin-main form select,
+  .admin-main form textarea {
+    font-size: 1rem;
+  }
+
+  /* Simulate mobile app card spacing */
+  .admin-main .card {
+    margin-bottom: 16px;
+  }
+}

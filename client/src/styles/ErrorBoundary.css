@@ -1,0 +1,230 @@
+/* ErrorBoundary.css
+   Modern dark theme (not pure black) with soft gradients, subtle shadows,
+   rounded corners, responsive mobile-first layout, and accessible states.
+*/
+
+/* Theme variables for consistent styling across components */
+:root{
+  --bg-900: #0b1220; /* deep navy (not pure black) */
+  --bg-800: #0f1724;
+  --panel: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  --glass-border: rgba(255,255,255,0.04);
+  --muted: #a6b0c3;
+  --text: #e6eef8;
+  --accent: #7dd3fc; /* soft cyan accent */
+  --accent-2: #60a5fa; /* slightly bluer */
+  --accent-3: #c7f9ff; /* highlight for headings */
+  --danger: #fb7185;
+  --glass-blur: 8px;
+  --radius-lg: 14px;
+  --radius-md: 10px;
+  --shadow-1: 0 6px 18px rgba(3,8,20,0.55);
+  --shadow-2: 0 10px 30px rgba(2,6,23,0.6);
+  --transition-fast: 180ms cubic-bezier(.2,.9,.2,1);
+  --transition-medium: 300ms cubic-bezier(.2,.9,.2,1);
+  --max-width: 760px;
+  --mobile-gap: 16px;
+  --desktop-gap: 28px;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial;
+}
+
+/* Page-level wrapper: centers card and provides responsive vertical sizing.
+   Using min-height so content remains vertically centered on taller screens. */
+.error-boundary{
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(60vh);
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(10,14,23,0.25), rgba(6,10,18,0.6));
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Card — glass-like panel with soft gradient and subtle shadow */
+.eb-card{
+  width: 100%;
+  max-width: var(--max-width);
+  background: var(--panel);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-2);
+  backdrop-filter: blur(var(--glass-blur));
+  display: flex;
+  flex-direction: column;
+  gap: var(--desktop-gap);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+  transform: translateY(0);
+  /* subtle entrance hint via transform/opacity (if you later add animations) */
+}
+
+/* Lift and more prominent shadow on hover/focus for pointer devices */
+.eb-card:hover,
+.eb-card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(3,8,20,0.7);
+}
+
+/* Title styling — prominent but soft */
+.eb-title{
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  color: var(--accent-3);
+  letter-spacing: -0.2px;
+  font-weight: 700;
+}
+
+/* Message paragraph — high readability with relaxed line length */
+.eb-message{
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 100%;
+}
+
+/* Actions container — responsive layout: inline on large, stacked on small */
+.eb-actions{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Base button styles — used by both primary and ghost styles */
+.eb-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  min-height: 44px; /* comfortable tap target */
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Primary CTA — subtle gradient and soft shadow */
+.eb-btn-primary{
+  background: linear-gradient(90deg, rgba(125,211,252,0.12), rgba(96,165,250,0.10));
+  color: var(--accent);
+  box-shadow: 0 6px 18px rgba(34,50,84,0.35);
+  border: 1px solid rgba(125,211,252,0.14);
+}
+
+/* Ghost button — neutral, bordered, good contrast */
+.eb-btn-ghost{
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: none;
+}
+
+/* Hover / active / focus states for buttons */
+.eb-btn:focus,
+.eb-btn:hover{
+  transform: translateY(-2px);
+  opacity: 0.98;
+  box-shadow: 0 10px 26px rgba(2,6,23,0.45);
+}
+
+/* Active press state */
+.eb-btn:active{
+  transform: translateY(0);
+  opacity: 0.96;
+  box-shadow: 0 6px 12px rgba(2,6,23,0.35);
+}
+
+/* Keyboard focus visible ring for accessibility */
+.eb-btn:focus{
+  box-shadow: 0 0 0 4px rgba(96,165,250,0.12);
+  border-radius: 10px;
+}
+
+/* Footer note — smaller, muted text */
+.eb-footer{
+  margin-top: 2px;
+  font-size: 0.85rem;
+  color: rgba(166,176,195,0.8);
+  line-height: 1.4;
+}
+
+/* Small screens (mobile-first): stack content, make tap areas larger */
+@media (max-width: 640px) {
+  :root {
+    --desktop-gap: 16px;
+  }
+
+  .error-boundary {
+    min-height: 70vh;
+    padding: 18px;
+  }
+
+  .eb-card{
+    padding: 20px;
+    border-radius: 16px;
+    gap: var(--mobile-gap);
+  }
+
+  .eb-title{
+    font-size: 1.25rem;
+  }
+
+  .eb-message{
+    font-size: 1rem;
+  }
+
+  /* On mobile, place actions vertically for large tap targets */
+  .eb-actions{
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .eb-btn{
+    width: 100%;
+    padding: 14px 16px;
+    min-height: 52px;
+    border-radius: 12px;
+  }
+}
+
+/* Larger screens: create a compact horizontal layout */
+@media (min-width: 641px) {
+  .eb-card{
+    padding: 28px 32px;
+  }
+
+  /* place actions inline on wider screens */
+  .eb-actions{
+    justify-content: flex-start;
+    gap: 14px;
+  }
+
+  .eb-btn{
+    padding: 10px 18px;
+  }
+}
+
+/* High-contrast and reduced-motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .eb-card,
+  .eb-btn {
+    transition: none;
+  }
+}
+
+/* Utility: ensure anchor buttons appear and behave like buttons */
+a.eb-btn {
+  display: inline-flex;
+}

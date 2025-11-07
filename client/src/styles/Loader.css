@@ -1,0 +1,82 @@
+/* Loader.css
+   Elegant dark-mode loader with gradient glow and glassy background
+   that fits seamlessly with the rest of the dark theme UI.
+*/
+
+:root {
+  --bg-900: #0b1220;
+  --bg-overlay: rgba(11, 18, 32, 0.65);
+  --accent-1: #60a5fa;
+  --accent-2: #7dd3fc;
+  --accent-3: #38bdf8;
+  --text: #e5e7eb;
+  --blur: 10px;
+  --spinner-size: 64px;
+  --spinner-border: 5px;
+  --transition: 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* Loader overlay container — centered content, flexible sizing */
+.loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* fills viewport */
+  width: 100%;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(var(--blur));
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: opacity var(--transition);
+  color: var(--text);
+}
+
+/* The glowing circular spinner */
+.spinner {
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  border-radius: 50%;
+  border: var(--spinner-border) solid rgba(255, 255, 255, 0.06);
+  border-top-color: var(--accent-1);
+  border-right-color: var(--accent-2);
+  border-bottom-color: var(--accent-3);
+  animation: spin 1.2s linear infinite;
+  box-shadow: 0 0 18px rgba(125, 211, 252, 0.4);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+/* Subtle pulse while spinning */
+.spinner:hover {
+  box-shadow: 0 0 24px rgba(125, 211, 252, 0.6);
+  transform: scale(1.05);
+}
+
+/* Smooth rotation animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsiveness */
+@media (max-width: 640px) {
+  .spinner {
+    width: 52px;
+    height: 52px;
+    border-width: 4px;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+    border-top-color: var(--accent-3);
+  }
+}

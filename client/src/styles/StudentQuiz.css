@@ -1,0 +1,97 @@
+.student-quiz-container{
+	padding:18px;
+	max-width:980px;
+	margin:0 auto;
+}
+.student-quiz-container h1{
+	margin:0 0 12px;
+	color:var(--muted);
+	font-size:1.25rem;
+}
+.student-quiz-container label{display:block;margin-bottom:10px}
+.question-section{
+	background:rgba(255,255,255,0.02);
+	padding:16px;
+	border-radius:10px;
+	border:1px solid rgba(255,255,255,0.04);
+	margin-top:14px;
+}
+.question-text{
+	font-size:1.05rem;
+	line-height:1.5;
+	margin-bottom:12px;
+	color:var(--muted);
+}
+.options{
+	display:flex;
+	flex-direction:column;
+	gap:12px;
+}
+/* Ensure label.option-card renders as a flex row even if a broader label rule sets display:block */
+.student-quiz-container label.option-card,
+label.option-card{
+	display:flex;
+	flex-direction:row;
+	flex-wrap:nowrap;
+	align-items:center;
+}
+.option-card{
+	display:flex;
+	flex-direction:row;
+	align-items:center;
+	justify-content:flex-start;
+	gap:8px;
+	padding:10px 12px;
+	border-radius:8px;
+	border:1px solid rgba(255,255,255,0.03);
+	background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+	cursor:pointer;
+	flex-wrap:nowrap; /* prevent radio from stacking above text */
+}
+.option-card input[type="radio"]{
+	/* ensure native radio appears left and is small */
+	order:0;
+	appearance:auto;
+	-webkit-appearance:radio;
+	width:16px;
+	height:16px;
+	margin:0 10px 0 0;
+	flex:0 0 auto;
+}
+.option-bullet{display:none}
+.option-content{
+	order:1;
+	flex:1 1 auto;
+	min-width:0; /* allow shrinking beside the radio */
+	color:var(--muted);
+	word-break:break-word;
+	margin:0;
+}
+.option-card.checked{
+	border-color:var(--accent-2);
+	background:linear-gradient(180deg, rgba(7,89,133,0.04), rgba(3,45,76,0.01));
+}
+.navigation-buttons{display:flex;gap:8px;margin-top:12px}
+.navigation-buttons button{
+	padding:8px 12px;
+	border-radius:8px;
+	border:none;
+	cursor:pointer;
+	background:linear-gradient(90deg,#2563eb,#1e40af);
+	color:#fff;
+	font-weight:700;
+}
+.navigation-buttons button[disabled]{
+	opacity:0.5;
+	cursor:not-allowed;
+	background:linear-gradient(90deg, rgba(37,99,235,0.35), rgba(30,64,175,0.35));
+}
+.ml-8{margin-left:8px}
+.mt-8{margin-top:8px}
+
+@media (max-width:720px){
+	.student-quiz-container{padding:14px}
+	.question-text{font-size:1rem}
+	.option-card{padding:10px}
+	.option-card input[type="radio"]{width:16px;height:16px;margin:0 8px 0 4px}
+}

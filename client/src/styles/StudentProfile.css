@@ -1,0 +1,6 @@
+.student-profile-container{padding:20px}
+.student-profile-container h1{margin:0 0 12px;color:var(--muted)}
+.profile-actions{margin-top:12px}
+.btn-logout{background:var(--danger,#b00020);color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
+.profile-form label{display:block;margin-bottom:8px}
+.profile-form input{display:block;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);width:100%}

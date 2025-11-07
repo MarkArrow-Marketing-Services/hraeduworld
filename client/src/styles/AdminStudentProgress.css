@@ -1,0 +1,6 @@
+.student-activity{display:flex;gap:16px}
+.student-activity .left{width:300px}
+.student-activity .right{flex:1}
+.student-list li button{width:100%;text-align:left;padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.02)}
+.activity-table{width:100%;border-collapse:collapse}
+.activity-table th,.activity-table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:left}

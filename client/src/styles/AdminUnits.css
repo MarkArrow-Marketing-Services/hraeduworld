@@ -1,0 +1,397 @@
+:root {
+  /* Units page: dark elegant theme */
+  --bg-page: #0d111a;
+  --bg-card: #1b2230; /* match AdminClasses' card color for visual parity */
+  --bg-surface: #1b2230;
+  --text: #e7edf4;
+  --muted: #a0a8b3;
+  --accent: #7c3aed; /* purple for publish */
+  --accent-600: #5b21b6;
+  --upload: #fb923c; /* orange for upload actions */
+  --success: #16a34a;
+  --danger: #ef4444;
+  --info: #06b6d4;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+  --transition: all 200ms cubic-bezier(.2,.9,.2,1);
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* ---------- Page Container ---------- */
+.admin-units-container {
+  max-width: 1100px;
+  margin: 1.4rem auto;
+  padding: 1.25rem 1.5rem;
+  color: var(--text);
+  font-family: var(--font-sans);
+  background: var(--bg-page);
+  border-radius: var(--radius-md);
+}
+
+/* ---------- Headings ---------- */
+.admin-units-container h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+/* ---------- Selects ---------- */
+.select-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.select-group label {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.select-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.select-group select {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg-surface);
+  color: var(--text);
+  outline: none;
+  min-width: 180px;
+  transition: var(--transition);
+}
+
+.select-group select:hover {
+  border-color: var(--accent);
+}
+
+/* ---------- Add Unit Form ---------- */
+.add-unit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: var(--shadow);
+  color: var(--text);
+}
+
+.add-unit-form input[type="text"],
+.add-unit-form textarea,
+.add-unit-form input[type="file"] {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg-surface);
+  color: var(--text);
+  outline: none;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.add-unit-form input[type="text"]:focus,
+.add-unit-form textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+}
+
+/* ---------- Inline Layouts ---------- */
+.inline-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* ---------- Resource Rows ---------- */
+.resource-row,
+.video-row,
+.pdf-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+  margin-top: 8px;
+}
+
+.video-row input[type="file"],
+.pdf-row input[type="file"] {
+  flex: 1;
+  background: var(--bg-surface);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+}
+
+.resource-name {
+  flex: 1 1 260px;
+  min-width: 140px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg-surface);
+  color: var(--text);
+}
+
+/* ---------- Inline Add Button ---------- */
+.add-inline-btn {
+  padding: 10px 14px;
+  font-size: 1rem;
+  min-width: 120px;
+  border-radius: 10px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.3);
+}
+
+.add-inline-btn.btn-primary {
+  background: linear-gradient(90deg, var(--upload), #fb7a2a);
+  color: #fff;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ---------- Primary Button ---------- */
+.btn-primary {
+  background: linear-gradient(90deg, var(--accent), var(--accent-600));
+  color: #fff;
+}
+
+/* ---------- Action Buttons (distinct even before hover) ---------- */
+
+.save-button {
+  background: linear-gradient(90deg, var(--success), #059669);
+  color: #eceff1;
+  border: none;
+  box-shadow: 0 10px 20px rgba(16,185,129,0.25);
+  margin-right: 5px;
+}
+.save-button:hover {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+}
+
+
+.delete-button {
+  background: linear-gradient(90deg, #dc2626, var(--danger));
+  color: #000000;
+  border: none;
+  box-shadow: 0 10px 20px rgba(239,68,68,0.25);
+}
+.delete-button:hover {
+  background: linear-gradient(90deg, #ef4444, #b91c1c);
+  transform: translateY(-2px);
+}
+
+
+.cancel-button {
+  background: linear-gradient(90deg, #f10404, #ff1d1d);
+  color: #e5e7eb;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 20px rgba(55,65,81,0.3);
+}
+.cancel-button:hover {
+  background: linear-gradient(90deg, #4b5563, #374151);
+  transform: translateY(-2px);
+}
+
+/* ---------- Additional Button Variants ---------- */
+.btn-warning {
+  background: linear-gradient(90deg, #f59e0b, #f97316);
+  color: #071018;
+}
+
+/* ---------- Unit List ---------- */
+.unit-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+/* ---------- Unit Card ---------- */
+.unit-card {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  /* Make unit cards match AdminClasses' card styling for visual parity */
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+  transition: transform 200ms cubic-bezier(.2,.9,.2,1), box-shadow 200ms ease, border-color 200ms ease;
+}
+.unit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+  border-color: rgba(124,58,237,0.16);
+}
+.unit-card .thumb {
+  width: 120px;
+  height: 72px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #202838, #1b2330);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-weight: 800;
+}
+.unit-card .content {
+  flex: 1;
+}
+.unit-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text);
+}
+.unit-card p {
+  margin: 6px 0 8px;
+  color: var(--muted);
+}
+
+/* ---------- Unit Card Buttons ---------- */
+.unit-card .mt-8 {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.unit-card .mt-8 .btn {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+.unit-card .mt-8 .btn-upload {
+  background: linear-gradient(90deg, var(--upload), #fb7a2a);
+  color: #fff;
+}
+.unit-card .mt-8 .btn-publish {
+  background: linear-gradient(90deg, var(--accent), var(--accent-600));
+  color: #fff;
+}
+.unit-card .mt-8 .btn-delete {
+  background: linear-gradient(90deg, #dc2626, var(--danger));
+  color: #fff;
+}
+.unit-card .mt-8 .btn-save {
+  background: linear-gradient(90deg, var(--success), #059669);
+  color: #041018;
+}
+.unit-card .mt-8 .btn-cancel {
+  background: linear-gradient(90deg, #374151, #1f2937);
+  color: #e5e7eb;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.unit-card .mt-8 .btn-save + .btn-cancel {
+  margin-left: 8px;
+}
+
+/* ---------- Unit Resources ---------- */
+.unit-resources ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.unit-resources li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.resource-link {
+  color: var(--info);
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(6,182,212,0.06), transparent);
+}
+
+/* ---------- Player Modal ---------- */
+.player-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(11,18,32,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.player-box {
+  background: var(--bg-card);
+  padding: 12px;
+  border-radius: 12px;
+  color: var(--text);
+  max-width: 920px;
+  width: 96%;
+  box-shadow: 0 28px 80px rgba(0,0,0,0.4);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .unit-list {
+    grid-template-columns: 1fr;
+  }
+  .unit-card {
+    flex-direction: row;
+    align-items: center;
+  }
+  .unit-card .thumb {
+    width: 100px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .select-group {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .video-row, .pdf-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .btn, .add-inline-btn {
+    width: 100%;
+    min-width: 0;
+  }
+  .unit-list {
+    grid-template-columns: 1fr;
+  }
+}

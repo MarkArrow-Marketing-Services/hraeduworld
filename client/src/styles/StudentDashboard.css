@@ -1,0 +1,231 @@
+.student-dashboard-container {
+  padding: 2rem;
+  /* background-color: #0e1118; */
+  color: #e5e9f0;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+/* ---------- Titles ---------- */
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #a78bfa;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: #e0e6ea;
+}
+
+/* ---------- Card Layout ---------- */
+.class-cards,
+.subject-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* ---------- CLASS CARD ---------- */
+.class-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  border: 1px solid #2c3240;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background-color: #161b25;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 550px;
+}
+
+.class-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+/* Inline info inside the class card */
+.class-details {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.class-name,
+.class-info,
+.class-status {
+  font-size: 0.95rem;
+  color: #e5e9f0;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.class-name {
+  font-weight: 700;
+}
+
+.class-status {
+  color: #a78bfa;
+  font-weight: 600;
+}
+
+/* ---------- Explore Button ---------- */
+.explore-btn {
+  background: none;
+  border: 1px solid white;
+  color: #ffffff;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s ease;
+}
+
+.explore-btn:hover {
+  border: 1px solid skyblue;
+  background: none;
+}
+
+/* ---------- SUBJECT CARDS ---------- */
+.subject-card {
+  border: 1px solid #2c3240;
+  padding: 14px;
+  border-radius: 10px;
+  background-color: #161b25;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+  flex: 1 1 220px;
+  max-width: 260px;
+}
+
+.subject-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.subject-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #e7edf4;
+  margin-bottom: 8px;
+}
+
+.subject-info {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin-bottom: 10px;
+}
+
+.subject-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.no-data-text {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.subject-section {
+  margin-top: 20px;
+}
+
+/* ---------- RESPONSIVE DESIGN ---------- */
+
+/* Medium screens (tablets) */
+@media (max-width: 992px) {
+  .student-dashboard-container {
+    padding: 1.5rem;
+  }
+
+  .dashboard-title {
+    font-size: 1.8rem;
+  }
+
+  .class-card {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .class-details {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .explore-btn {
+    align-self: flex-start;
+    padding: 7px 12px;
+  }
+
+  .subject-card {
+    flex: 1 1 45%;
+    max-width: 100%;
+  }
+}
+
+/* Small screens (mobile) */
+@media (max-width: 600px) {
+  .student-dashboard-container {
+    padding: 1rem;
+  }
+
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+  }
+
+  .class-card {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+  }
+
+  .class-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .explore-btn {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+
+  .subject-cards {
+    justify-content: center;
+  }
+
+  .subject-card {
+    flex: 1 1 100%;
+    max-width: 320px;
+  }
+}

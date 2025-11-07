@@ -1,0 +1,324 @@
+/* =========================================
+   Student Sidebar
+   ========================================= */
+
+:root {
+  --bg: #0e141b;
+  --surface: #151c25;
+  --card: #1a2332;
+  --text: #e7edf5;
+  --muted: #9aa6b2;
+  --accent: #7dd3fc;
+  --accent-2: #60a5fa;
+  --accent-3: #a78bfa;
+  --border: rgba(255, 255, 255, 0.06);
+  --shadow-1: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-hover: 0 10px 28px rgba(0, 0, 0, 0.8);
+  --radius-lg: 14px;
+  --radius-md: 10px;
+  --radius-sm: 8px;
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.35s ease;
+}
+
+/* Sidebar container */
+.student-sidebar {
+  width: 360px;
+  max-width: 100%;
+  padding: 18px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  color: var(--text);
+  box-sizing: border-box;
+  transition: all var(--transition-smooth);
+  position: relative;
+}
+
+.student-sidebar:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* Inner layout */
+.sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Header */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.3px;
+}
+
+.close-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 22px;
+  padding: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.close-btn:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+  transform: scale(1.08);
+}
+
+/* States */
+.state {
+  font-size: 13px;
+  color: var(--muted);
+  padding: 8px 2px;
+}
+
+/* Class list */
+.class-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+ 
+/* Class button */
+.class-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 12px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--text);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+.class-main:hover {
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-1px);
+}
+.class-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.class-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+.class-status {
+  font-size: 12px;
+  color: var(--muted);
+}
+.chevron {
+  font-size: 12px;
+  color: var(--muted);
+  transform: rotate(90deg);
+  transition: transform var(--transition-fast);
+}
+.chevron.expanded {
+  transform: rotate(270deg);
+  color: var(--accent);
+}
+
+/* Subject list */
+.subject-list {
+  margin-top: 4px;
+  padding-left: 14px;
+  border-left: 1px dashed rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Subject row */
+/* .subject-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+} */
+
+/* Subject button */
+.subject-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-top: 10px;
+}
+.subject-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  border-color: var(--accent-2);
+}
+.subject-btn:focus {
+  outline: 2px solid rgba(125, 211, 252, 0.2);
+  outline-offset: 3px;
+}
+.subject-name {
+  flex: 1;
+  color: var(--text);
+  font-weight: 600;
+  display: flex;            /* make children align in a row */
+  align-items: center;      /* vertically center them */
+  gap: 6px;                 /* add small space between "Subject" and "1" */
+  white-space: nowrap;      /* prevent wrapping to new line */
+}
+.unit-badge {
+  font-size: 12px;
+  background: rgba(125, 211, 252, 0.1);
+  border: 1px solid rgba(125, 211, 252, 0.15);
+  padding: 4px 9px;
+  border-radius: 999px;
+  color: var(--accent);
+}
+
+/* Meta */
+.subject-meta {
+  text-align: right;
+  min-width: 72px;
+}
+.subject-meta .small {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Floating mobile toggle */
+.mobile-sidebar-toggle {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, rgba(125, 211, 252, 0.18), rgba(167, 139, 250, 0.18));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: var(--shadow-1);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  z-index: 1000;
+}
+.mobile-sidebar-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+.mobile-sidebar-toggle .icon {
+  font-size: 16px;
+}
+.mobile-sidebar-toggle .label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Overlay */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+  z-index: 900;
+}
+.mobile-overlay.open {
+  display: block;
+  opacity: 1;
+}
+
+/* Mobile drawer */
+.student-sidebar.mobile-open {
+  position: fixed;
+  right: 12px;
+  top: 12%;
+  width: min(92%, 380px);
+  max-width: 100%;
+  z-index: 950;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .mobile-sidebar-toggle {
+    display: flex;
+  }
+
+  .student-sidebar {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 18rem;
+    transform: translateY(30px) scale(0.98);
+    opacity: 0;
+    pointer-events: none;
+    transition: all var(--transition-smooth);
+    z-index: 950;
+  }
+
+  .student-sidebar.mobile-open {
+    display: flex; /* ensure visible despite other global rules that may hide .student-sidebar on small screens */
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .student-sidebar.mobile-open .close-btn {
+    display: inline-flex;
+  }
+
+  .class-main {
+    padding: 14px;
+  }
+
+  .subject-btn {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .unit-badge {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .class-title {
+    font-size: 15px;
+  }
+}

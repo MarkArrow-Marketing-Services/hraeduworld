@@ -1,0 +1,389 @@
+/* ============================
+   StudentPanel.css
+   Modern dark theme (not pure black) with gradients, rounded corners,
+   subtle shadows, responsive mobile-first behavior, and smooth transitions.
+   ============================ */
+
+/* ---------- Theme variables ---------- */
+:root{
+  /* Colors (avoid pure black) */
+  --bg-100: #0f1723;    /* deep navy-gray */
+  --bg-90:  #11131a;    /* slightly lighter */
+  --panel:   linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.007));
+  --glass:   rgba(255,255,255,0.03);
+  --muted:   #9aa3b2;
+  --text:    #e6eef8;
+  --accent-1:#6EE7B7;   /* mint-ish */
+  --accent-2:#60A5FA;   /* blue */
+  --accent-3:#8B5CF6;   /* purple */
+  --danger:  #F87171;
+  --success: #34D399;
+
+  /* Spacing & typography */
+  --radius: 12px;
+  --soft-radius: 18px;
+  --gap: 16px;
+  --navbar-height: 64px;
+  --max-content-width: 1100px;
+
+  /* Elevation */
+  --shadow-1: 0 6px 18px rgba(3,8,23,0.55);
+  --shadow-2: 0 10px 30px rgba(3,8,23,0.6);
+
+  /* Transitions */
+  --fast: 160ms;
+  --med: 320ms;
+  --slow: 520ms;
+}
+
+/* ---------- Base layout ---------- */
+* { box-sizing: border-box; }
+html,body,#root { height:100%; }
+body{
+  margin:0;
+  /* Make the page-level gradient cover the viewport and stay fixed so there
+     are no visible seams or patches when inner containers are shorter than
+     the viewport. */
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(99,102,241,0.06), transparent 12%),
+              linear-gradient(180deg, var(--bg-100), var(--bg-90));
+  background-attachment: fixed;
+  color:var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-size:15px;
+  line-height:1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The main student panel reserves space for the fixed navbar (variable) */
+.student-panel{
+  display:flex;
+  flex-direction:column;
+  /* allow the panel to grow and always cover at least the viewport height
+     while letting content naturally expand without causing overflow seams */
+  min-height:100vh;
+  padding-top: calc(var(--navbar-height, 64px)); /* reserve navbar area */
+  gap: var(--gap);
+  padding-left:16px;
+  padding-right:16px;
+}
+
+/* ---------- Global Progress (top strip) ---------- */
+.global-progress{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 18px;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--panel);
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: var(--shadow-1);
+  backdrop-filter: blur(6px) saturate(120%);
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  transition: box-shadow var(--fast), transform var(--fast);
+}
+
+/* subtle hover lift for the progress container */
+.global-progress:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+}
+
+/* left part: progress visual */
+.global-progress .progress-inner{
+  flex:1;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  height:14px;
+  border-radius: 999px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  padding:2px;
+}
+
+/* animated gradient progress bar */
+.global-progress .progress-bar{
+  height:100%;
+  width: 30%; /* default - actual width may be set inline by component logic */
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
+  border-radius: 999px;
+  transition: width var(--med) ease-in-out, background var(--med);
+  box-shadow: 0 4px 10px rgba(98,110,255,0.08) inset;
+}
+
+/* right label */
+.global-progress .progress-label{
+  min-width:120px;
+  text-align:right;
+  font-size:13px;
+  color:var(--muted);
+  margin-left:8px;
+  user-select:none;
+}
+
+/* ---------- Body: sidebar + main ---------- */
+.student-body{
+  display:flex;
+  flex:1;
+  gap:20px;
+  align-items:stretch;
+  max-width: var(--max-content-width);
+  width:100%;
+  margin: 0 auto;
+}
+
+/* ---------- Sidebar ---------- */
+.student-sidebar{
+  width:260px;
+  min-width:220px;
+  border-radius: var(--soft-radius);
+  padding:18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.006));
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: var(--shadow-1);
+  backdrop-filter: blur(8px) saturate(120%);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  transition: transform var(--fast), opacity var(--fast);
+}
+
+/* Sidebar header area (if StudentSidebar uses headings/avatar, style generically) */
+.student-sidebar > *:first-child {
+  margin-bottom:6px;
+}
+
+/* Navigation list styles */
+.student-sidebar ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+/* links inside sidebar — target anchor or button elements */
+.student-sidebar a,
+.student-sidebar button {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:10px;
+  color:var(--muted);
+  text-decoration:none;
+  font-weight:600;
+  font-size:14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform var(--fast), background var(--fast), color var(--fast), box-shadow var(--fast);
+}
+
+/* default hover/focus/active states for sidebar items */
+.student-sidebar a:hover,
+.student-sidebar button:hover {
+  transform: translateY(-2px);
+  color:var(--text);
+  background: linear-gradient(90deg, rgba(96,165,250,0.06), rgba(139,92,246,0.04));
+  box-shadow: 0 6px 18px rgba(11,18,35,0.45);
+  outline: none;
+}
+.student-sidebar a:focus,
+.student-sidebar button:focus {
+  outline: 2px solid rgba(96,165,250,0.18);
+  outline-offset: 2px;
+  color:var(--text);
+}
+
+/* active state */
+.student-sidebar a.active{
+  color:var(--text);
+  background: linear-gradient(90deg, rgba(110,231,183,0.06), rgba(139,92,246,0.04));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+}
+
+/* small icons inside sidebar (if any) */
+.student-sidebar svg {
+  width:18px;
+  height:18px;
+  opacity:0.9;
+}
+
+/* ---------- Main content area ---------- */
+.student-main{
+  flex:1;
+  padding:22px;
+  overflow:auto;
+  border-radius: var(--soft-radius);
+  /* Use a transparent background so the body-level gradient remains
+     visually continuous across the entire page. Keep the subtle border and
+     shadow for elevation. */
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.02);
+  box-shadow: 0 8px 30px rgba(4,8,20,0.55);
+  transition: transform var(--fast), box-shadow var(--fast);
+  min-height: 0; /* for proper flex overflow */
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+/* constrain inner content to readable width */
+.student-main .content-inner {
+  max-width: calc(var(--max-content-width) - 320px);
+  width:100%;
+  margin: 0 auto;
+}
+
+/* generic card style for components inside main area */
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.008));
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.02);
+  padding:16px;
+  box-shadow: 0 6px 18px rgba(3,8,23,0.45);
+  transition: transform var(--fast), box-shadow var(--fast);
+}
+
+/* card hover lift */
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 40px rgba(2,8,30,0.6);
+}
+
+/* Headings and text */
+h1, h2, h3 {
+  margin:0;
+  color:var(--text);
+  font-weight:700;
+  letter-spacing: -0.02em;
+}
+h1 { font-size:20px; }
+h2 { font-size:18px; }
+p { color:var(--muted); margin:0; }
+
+/* Buttons (global styles for any buttons inside children) */
+button, .btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:10px;
+  border: none;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent-3));
+  color: white;
+  font-weight:700;
+  cursor:pointer;
+  transition: transform var(--fast), box-shadow var(--fast), opacity var(--fast);
+  box-shadow: 0 8px 26px rgba(86,92,255,0.12);
+}
+button:active, .btn:active { transform: translateY(1px) scale(0.997); }
+button:focus { outline: 3px solid rgba(96,165,250,0.13); outline-offset: 2px; }
+
+/* Secondary button */
+.btn-ghost {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.btn-ghost:hover { color: var(--text); transform: translateY(-2px); }
+
+/* Inputs & selects generic styling */
+input, select, textarea {
+  width:100%;
+  padding:10px 12px;
+  border-radius:10px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.028);
+  color: var(--text);
+  font-size:14px;
+  transition: box-shadow var(--fast), border-color var(--fast);
+}
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: rgba(96,165,250,0.6);
+  box-shadow: 0 6px 18px rgba(96,165,250,0.06);
+}
+
+/* Links */
+a {
+  color: var(--accent-2);
+  text-decoration: none;
+  transition: color var(--fast), text-decoration var(--fast);
+}
+a:hover { text-decoration: underline; color: var(--accent-3); }
+
+/* ---------- Responsive: adapt to smaller screens ---------- */
+/* Medium screens */
+@media (max-width: 1100px) {
+  .student-sidebar { width:220px; min-width:200px; }
+  .student-main .content-inner { max-width: calc(100% - 260px); }
+}
+
+/* Tablet and small laptops */
+@media (max-width: 900px) {
+  .student-body { gap:12px; padding-bottom:12px; }
+  /* hide sidebar on smaller viewports to prioritize content (keeps logic intact) */
+  .student-sidebar { display:none; transform: translateX(-8px); opacity:0; pointer-events:none; }
+  .student-main {
+    border-radius: calc(var(--radius));
+    padding:18px;
+  }
+  .global-progress { max-width: 100%; border-radius: var(--radius); }
+}
+
+/* Mobile — stacked app-like feel */
+@media (max-width: 520px) {
+  .student-panel { padding-left: 12px; padding-right: 12px; gap:10px; }
+  .global-progress{
+    padding:10px 12px;
+    border-radius: 12px;
+    align-items:center;
+    gap:8px;
+  }
+  .global-progress .progress-inner{ height:12px; }
+  .global-progress .progress-label{ display:none; } /* compact */
+  .student-body { flex-direction: column-reverse; gap:12px; align-items:stretch; }
+
+  /* make main area look like a mobile app card */
+  .student-main {
+    padding:18px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 20px 40px rgba(2,6,20,0.6);
+  }
+
+  /* children content should stretch full width, with large tap targets */
+  .student-main .content-inner { padding: 0 4px; max-width:100%; }
+  .card { padding:14px; border-radius:12px; }
+
+  /* enlarge buttons and inputs for touch */
+  button, .btn { padding:12px 16px; font-size:16px; border-radius:12px; }
+  input, select, textarea { padding:12px 14px; border-radius:12px; font-size:15px; }
+}
+
+/* ---------- Scrollbar styling for desktop (non-intrusive) ---------- */
+.student-main::-webkit-scrollbar,
+.student-body::-webkit-scrollbar {
+  height:10px; width:10px;
+}
+.student-main::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border-radius:999px;
+  border: 2px solid transparent;
+}
+
+/* ---------- Utility helpers ---------- */
+.flex { display:flex; gap:var(--gap); align-items:center; }
+.space-between { display:flex; justify-content:space-between; align-items:center; }
+.hidden { display:none !important; }
+
+/* small accessibility improvement: reduce motion for users who prefer that */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

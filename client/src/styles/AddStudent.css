@@ -1,0 +1,432 @@
+/* ===========================
+   AddStudent.css
+   Professional Dark Glass UI
+=========================== */
+
+:root {
+  --bg-dark: rgba(18, 18, 18, 0.9);
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --border-glass: rgba(255, 255, 255, 0.15);
+  --text-light: #e8e8e8;
+  --text-muted: #aaa;
+  --accent-blue: #3b82f6;
+  --accent-green: #22c55e;
+  --accent-red: #ef4444;
+  --accent-yellow: #facc15;
+  --accent-purple: #a855f7;
+  --radius: 14px;
+  --blur: 16px;
+  --shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+  --transition: 0.25s ease;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #1c1c1c, #2c2c2c);
+  color: var(--text-light);
+}
+
+/* ===== Main Container ===== */
+.add-student-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+/* ===== Glass Card ===== */
+.card {
+  background: linear-gradient(145deg, #0d111a 0%, #121826 100%);
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(var(--blur));
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: 2rem;
+  width: 100%;
+  max-width: 950px;
+  color: var(--text-light);
+  transition: var(--transition);
+  
+}
+
+.card h2,
+.card h3 {
+  text-align: center;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ===== Form Styling ===== */
+.add-student-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.add-student-form input,
+.add-student-form select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  padding: 0.65rem 1rem;
+  color: var(--text-light);
+  outline: none;
+  transition: var(--transition);
+}
+
+.add-student-form input:focus,
+.add-student-form select:focus {
+  border-color: var(--accent-blue);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.add-student-form button {
+  background: var(--accent-blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.add-student-form button:hover {
+  background: #2563eb;
+  transform: scale(1.02);
+}
+
+/* ===== Password Meter ===== */
+.password-meter {
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+}
+
+.password-conditions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.condition-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ===== Class & Subject Section ===== */
+.class-assign {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-glass);
+}
+
+.class-assign h4 {
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+  color: var(--accent-purple);
+}
+
+/* Each grade row */
+.class-item {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.5rem 0.8rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* Grade section */
+.class-left {
+  display: flex;
+  align-items: center;
+  gap: 6px !important; /* small explicit gap between checkbox and class name */
+  font-weight: 500;
+  /* Reserve fixed left column so name won't wrap below the checkbox */
+  /* reduce left column so grade label is closer to checkbox */
+  flex: 0 0 160px;
+  min-width: 150px;
+  white-space: nowrap;
+  justify-content: flex-start; /* ensure checkbox and text align to the left */
+  padding-left: 0; /* avoid accidental padding from other rules */
+  text-align: left !important;
+  padding: 0 !important;
+}
+
+/* Ensure checkbox and the class name text align on the same line */
+.class-left input[type="checkbox"] {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0 !important; /* gap handles spacing */
+}
+.class-left strong,
+.class-left span,
+.class-left label {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  margin-left: 0 !important; /* prevent accidental auto margins */
+  flex: 0 0 auto !important; /* prevent strong from expanding */
+  text-align: left !important;
+}
+
+/* Extra defensive rule: ensure the strong (class name) sits immediately after checkbox */
+.class-left > strong {
+  margin-left: 6px !important;
+  width: auto !important;
+  text-align: left !important;
+}
+
+/* small inline container for checkbox + class name to avoid outer label rules */
+.class-left .class-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* defensive: ensure label element itself doesn't center its children */
+.add-student-container .card .class-assign label[class="class-left"] {
+  justify-content: flex-start !important;
+  align-items: center !important;
+  padding: 0 !important;
+  text-align: left !important;
+}
+
+/* Subject section */
+.subject-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: nowrap; /* Keeps them in one line */
+  overflow-x: auto; /* Enables horizontal scroll if too many subjects */
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-purple) transparent;
+}
+
+.subject-list::-webkit-scrollbar {
+  height: 6px;
+}
+
+.subject-list::-webkit-scrollbar-thumb {
+  background-color: var(--accent-purple);
+  border-radius: 3px;
+}
+
+.subject-item {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* align with class-left spacing */
+  font-size: 0.9rem;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+
+/* Checkbox accent */
+.subject-item input[type="checkbox"],
+.class-left input[type="checkbox"] {
+  accent-color: var(--accent-blue);
+  cursor: pointer;
+}
+
+/* ===== User List Section ===== */
+.student-list {
+  margin-top: 2rem;
+}
+
+.student-list input {
+  width: 100%;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  padding: 0.6rem 1rem;
+  color: var(--text-light);
+  outline: none;
+}
+
+.user-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: var(--transition);
+}
+
+.user-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* User list: make static user view a single-row with actions aligned right */
+.user-card .user-view {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.user-card .user-view .user-details {
+  flex: 1 1 auto;
+}
+.user-card .user-view .actions {
+  margin-left: 12px;
+  flex: 0 0 auto;
+}
+
+/* ===== Buttons ===== */
+.actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.actions button,
+.user-card button {
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.5rem 1rem;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+/* Different button colors */
+.actions button:nth-child(1),
+.user-card button:nth-child(1) {
+  background: var(--accent-green);
+}
+
+.actions button:nth-child(2),
+.user-card button:nth-child(2) {
+  background: var(--accent-red);
+}
+
+.actions button:hover,
+.user-card button:hover {
+  opacity: 0.9;
+  transform: scale(1.03);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .class-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .subject-list {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+
+/* ===== Defensive overrides (very specific) =====
+   Ensure any global or page-scoped CSS does not force labels/inputs to block-level
+   which would push subjects onto new lines. These rules are scoped under the
+   .add-student-container .card hierarchy and use !important to be robust. */
+.add-student-container .card .class-assign .class-item {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 1rem !important;
+}
+.add-student-container .card .class-assign .class-left,
+.add-student-container .card .class-assign label {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  white-space: nowrap !important;
+}
+.add-student-container .card .class-assign .class-left {
+  justify-content: flex-start !important;
+  padding-left: 0 !important;
+}
+.add-student-container .card .class-assign .class-left {
+  /* Force horizontal layout for class-left (some other styles set column) */
+  flex-direction: row !important;
+  align-items: center !important;
+}
+.add-student-container .card .class-assign .class-left strong,
+.add-student-container .card .class-assign .class-left b {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  line-height: 1 !important;
+}
+.add-student-container .card .class-assign .subject-list {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  white-space: nowrap !important;
+}
+.add-student-container .card .class-assign .class-left input[type="checkbox"],
+.add-student-container .card .class-assign .subject-list input[type="checkbox"] {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin-right: 0 !important; /* gap handles spacing consistently */
+}
+
+
+
+/* ===== Edit Actions: Save & Cancel Buttons ===== */
+.edit-actions {
+  display: flex;
+  justify-content: flex-end; /* aligns buttons to the right side */
+  align-items: center;
+  gap: 1rem; /* professional and balanced gap between buttons */
+  margin-top: 1rem;
+}
+
+/* Save button (primary look) */
+.btn-save {
+  background: var(--accent-green);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-save:hover {
+  background: #16a34a;
+  transform: scale(1.03);
+}
+
+/* Cancel button (secondary look) */
+.btn-cancel {
+  background: var(--accent-red);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-cancel:hover {
+  background: #dc2626;
+  transform: scale(1.03);
+}
+
+/* Ensure consistent layout even in small screens */
+@media (max-width: 600px) {
+  .edit-actions {
+    justify-content: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+}
+
+/* Strong override: ensure the Add Student page card uses the requested gradient */
+.add-student-container.container > .card {
+  background: linear-gradient(145deg, #0d111a 0%, #121826 100%) !important;
+}

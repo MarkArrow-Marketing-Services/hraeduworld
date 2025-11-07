@@ -1,0 +1,239 @@
+:root {
+  --bg-dark: #0d1117;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --border-light: rgba(255, 255, 255, 0.08);
+  --text-light: #e6e6e6;
+  --text-muted: #9ca3af;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --danger: #ef4444;
+}
+
+/* --- Page Container --- */
+.dashboard-container {
+  padding: 2rem;
+  color: var(--text-light);
+  background: linear-gradient(135deg, #0e121a, #10151e);
+  min-height: 100vh;
+}
+
+/* Remove admin layout chrome for this page: make admin-main/admin-container transparent */
+.admin-main,
+.admin-container {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Reduce the large top gap so page content sits just below the fixed navbar */
+.admin-main{
+  /* default nav height variable is 64px; subtract 24px to leave a small gap */
+  margin-top: calc(var(--admin-navbar-height) - 40px) !important;
+  padding-top: 12px !important;
+}
+
+/* --- Title --- */
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+/* --- Stat Grid --- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  text-align: center;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
+}
+
+.stat-card h3 {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.stat-card p {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+/* --- Students Panel --- */
+.students-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.students-list {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.students-list h3 {
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.student-search {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  background: transparent;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+.student-search:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.student-list-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.student-btn {
+  width: 100%;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 0.8rem;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.25s ease;
+}
+
+.student-btn:hover {
+  border-color: var(--accent);
+  background: rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
+}
+
+.student-name {
+  font-weight: 500;
+}
+
+.student-progress {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.muted-text {
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* --- Modal --- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  backdrop-filter: blur(4px);
+}
+
+.modal-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  max-height: 85%;
+  overflow: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 1.5rem;
+  color: var(--text-light);
+  z-index: 1000;
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.25);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: var(--accent);
+}
+
+.modal-content {
+  margin-top: 1rem;
+}
+
+.modal-subtitle {
+  color: var(--accent);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* --- Table --- */
+.table-container {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.quiz-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.quiz-table th,
+.quiz-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: left;
+}
+
+.quiz-table th {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.quiz-table tr:hover {
+  background: rgba(59, 130, 246, 0.08);
+}

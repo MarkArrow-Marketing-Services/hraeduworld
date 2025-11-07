@@ -1,0 +1,319 @@
+/* ========================
+   Base Navbar Styling
+======================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  padding: 0 1rem;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  border-radius: 16px;
+  z-index: 100;
+  background: rgba(30, 32, 45, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* (removed automatic swap to full progress at 520px - we render compact variant in JS now) */
+
+.nav-logo {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #a5b4fc;
+  text-decoration: none;
+  letter-spacing: 0.6px;
+}
+
+/* Center slot inside navbar for compact widgets like the progress bar */
+.nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+/* ========================
+   Nav Links
+======================== */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-link {
+  color: #e5e7eb;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #a5b4fc;
+}
+
+/* ========================
+   Premium Buttons
+======================== */
+.nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.4px;
+}
+
+/* Add Quiz Button — Vibrant & Energetic */
+.addquiz-btn {
+  background: linear-gradient(90deg, #14b8a6, #0ea5e9);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35);
+}
+
+.addquiz-btn:hover {
+  background: linear-gradient(90deg, #0ea5e9, #2563eb);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(14, 165, 233, 0.45);
+}
+
+/* Dashboard Button — Professional & Confident */
+.dashboard-btn {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+}
+
+.dashboard-btn:hover {
+  background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(99, 102, 241, 0.45);
+}
+
+/* ========================
+   Profile Circle
+======================== */
+.nav-profile {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border-radius: 50%;
+  font-weight: 700;
+  transition: 0.3s ease;
+}
+
+.nav-profile:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.nav-profile-wrapper {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* ========================
+   Mobile Menu Button
+======================== */
+.menu-toggle {
+  display: none;
+  font-size: 1.6rem;
+  color: white;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.menu-toggle:hover {
+  color: #a5b4fc;
+}
+
+/* ========================
+   Responsive Design
+======================== */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 72px;
+    right: 0;
+    width: 85%;
+    height: calc(100vh - 72px);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 2rem 1.5rem;
+    gap: 1.2rem;
+    background: rgba(25, 27, 38, 0.95);
+    backdrop-filter: blur(12px);
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-links.active {
+    transform: translateX(0);
+  }
+
+  .nav-link,
+  .nav-button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
+
+  .nav-button {
+    font-size: 1rem;
+  }
+
+  .addquiz-btn {
+    background: linear-gradient(90deg, #06b6d4, #2563eb);
+  }
+
+  .dashboard-btn {
+    background: linear-gradient(90deg, #7c3aed, #4f46e5);
+  }
+
+  .nav-profile-wrapper {
+    align-self: flex-start;
+    margin-top: 1.2rem;
+  }
+
+  /* Mobile progress: render compact variant by default at this breakpoint
+     and keep the full variant hidden. On very small screens (<=520px)
+     we'll swap to the full variant for readability. */
+  .nav-progress-mobile { display: block; width: 100%; margin-bottom: 0.8rem; }
+  .nav-progress-mobile .global-progress { display: none; width: 100%; }
+  .nav-progress-mobile .global-progress.compact { display: flex; }
+
+  /* Ensure the compact progress shows its TRACK inside the mobile menu.
+     Make the track flexible so it can shrink on narrow menus and the
+     percentage/fraction stay visible. */
+  .nav-progress-mobile .global-progress.compact {
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+  }
+
+  .nav-progress-mobile .global-progress.compact .progress-track.compact {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+    max-width: none;
+    height: 10px;
+  }
+
+  /* Stronger overrides to ensure the compact TRACK is visible inside the
+     mobile menu across a range of widths. Use higher specificity and
+     important where necessary to override the default compact sizing. */
+  .nav-links .nav-progress-mobile .global-progress.compact .progress-track.compact {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 10px !important;
+    background: rgba(255,255,255,0.06) !important;
+  }
+
+  .nav-links .nav-progress-mobile .global-progress.compact .progress-fill.compact {
+    transition: width 0.25s ease-in-out !important;
+    height: 100% !important;
+    border-radius: 999px !important;
+    background: linear-gradient(90deg, #60a5fa, #38bdf8) !important;
+  }
+
+  .nav-progress-mobile .global-progress.compact .progress-info.compact {
+    flex: 0 0 auto;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  /* Hide centered progress on narrow screens so menu doesn't overlap */
+  .nav-center {
+    display: none;
+  }
+}
+
+/* ========================
+   Profile Modal
+======================== */
+.profile-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 90;
+}
+
+.profile-modal {
+  position: fixed;
+  right: 20px;
+  top: calc(72px + 12px);
+  width: 320px;
+  background: rgba(35, 38, 55, 0.9);
+  color: #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  z-index: 100;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 28px rgba(2, 6, 23, 0.5);
+}
+
+.profile-modal .close-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #9ca3af;
+  float: right;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.profile-modal .close-btn:hover {
+  color: #fff;
+}
+
+.profile-modal .logout-btn {
+  background-image: none; /* ensure no global gradients override */
+  background-color: #ef4444; /* solid red */
+  border: none;
+  color: #fff;
+  padding: 6px 10px; /* reduced padding for smaller size */
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: all 0.18s ease;
+  width: 25%;
+  margin-top: 6px; /* small spacing from elements above */
+}
+
+.profile-modal .logout-btn:hover {
+  transform: translateY(-2px);
+  background-color: #dc2626; /* slightly darker red on hover */
+}

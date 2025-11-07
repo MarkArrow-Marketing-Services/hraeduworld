@@ -1,0 +1,104 @@
+:root{
+  --qq-bg:#ffffff;
+  --qq-surface:#f6f8fb;
+  --qq-card:#ffffff;
+  --qq-border:#e6eef8;
+  --qq-text:#0f1724;
+  --qq-muted:#64748b;
+  --qq-primary:#7c3aed; /* purple add */
+  --qq-save:#06b6d4; /* teal save */
+  --qq-success:#10b981;
+  --qq-danger:#ef4444;
+  --radius:10px;
+  --transition:all 180ms cubic-bezier(.2,.9,.2,1);
+  /* dark form tokens for quiz forms */
+  --qq-form-bg:#0b1220;
+  --qq-form-input:#071021;
+  --qq-form-text:#e6eef8;
+  --qq-form-border:rgba(255,255,255,0.06);
+}
+
+.admin-quizzes-container{max-width:1000px;margin:1.2rem auto;padding:1rem 1.25rem;background:transparent}
+.select-group{display:flex;gap:1rem;margin-bottom:1rem;align-items:center;flex-wrap:wrap}
+.select-group label{font-weight:600;color:var(--qq-form-text)}
+.select-group select{padding:8px 10px;border-radius:8px;border:1px solid var(--qq-form-border);background:var(--qq-form-input);color:var(--qq-form-text)}
+
+.quiz-form{display:flex;flex-direction:column;gap:14px}
+.question-block{border-radius:var(--radius);padding:1rem;background:linear-gradient(180deg,var(--qq-form-bg),#071021);border:1px solid var(--qq-form-border);box-shadow:0 14px 36px rgba(2,6,23,0.6);color:var(--qq-form-text)}
+
+.question-header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.question-number{width:36px;height:36px;border-radius:8px;background:linear-gradient(180deg,var(--qq-primary),#6d28d9);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:800}
+.question-title{font-weight:700;color:var(--qq-text);font-size:1rem}
+
+.question-block textarea,.question-block input[type='text']{width:100%;padding:10px;border-radius:8px;border:1px solid var(--qq-form-border);font-size:1rem;color:var(--qq-form-text);background:var(--qq-form-input);outline:none;transition:var(--transition)}
+.question-block textarea{min-height:96px}
+
+.options-group{display:flex;flex-direction:column;gap:8px}
+.option-row{display:flex;align-items:center;gap:10px}
+.option-row input[type='text']{flex:1;padding:8px;border-radius:8px;border:1px solid var(--qq-form-border);background:var(--qq-form-input);color:var(--qq-form-text)}
+.option-chip{padding:8px 10px;border-radius:999px;border:1px solid var(--qq-form-border);background:var(--qq-form-input);color:var(--qq-form-text);font-weight:600}
+
+.option-btn{padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:600}
+.option-btn.correct{background:linear-gradient(90deg,var(--qq-success),#059669);color:#041018}
+.option-btn.wrong{background:linear-gradient(90deg,var(--qq-danger),#c53030);color:#fff}
+.option-btn.neutral{background:transparent;border:1px solid rgba(15,23,36,0.06);color:var(--qq-text)}
+
+.quiz-actions{display:flex;gap:10px;align-items:center}
+/* Add Question (Green) - scoped to admin-quizzes container for higher specificity */
+.admin-quizzes-container .btn-quiz-add{background:linear-gradient(90deg,var(--qq-success),#059669);color:#041018;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:800}
+.admin-quizzes-container .btn-quiz-add:hover{filter:brightness(0.98);transform:translateY(-1px)}
+
+/* Create Quiz (Blue primary) - scoped */
+.admin-quizzes-container .btn-quiz-save{background:linear-gradient(90deg,#2563eb,#1e40af);color:#fff;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+.admin-quizzes-container .btn-quiz-save:hover{filter:brightness(0.98);transform:translateY(-1px)}
+
+/* Remove Question (Red) - scoped and clearly destructive */
+.admin-quizzes-container .btn-quiz-remove{background:linear-gradient(90deg,var(--qq-danger),#c53030);color:#fff;padding:8px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+.admin-quizzes-container .btn-quiz-remove:hover{filter:brightness(1.02);transform:translateY(-1px)}
+
+.admin-quizzes-container .btn-quiz-cancel{background:transparent;border:1px solid var(--qq-form-border);padding:10px 14px;border-radius:10px;color:var(--qq-form-text);cursor:pointer}
+
+@media (max-width:720px){
+  .option-row{flex-direction:column;align-items:stretch}
+  .quiz-actions{flex-direction:column;align-items:stretch}
+  .btn-quiz-add,.btn-quiz-save,.btn-quiz-cancel{width:100%}
+}
+
+/* small helpers */
+.question-divider{height:1px;background:rgba(15,23,36,0.04);margin:6px 0}
+
+/* Quiz list item layout: left content + right actions */
+.admin-quizzes-container .quiz-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border-radius:12px;
+  margin-bottom:12px;
+  /* Match AdminClasses card appearance: dark card, subtle border and shadow */
+  background: #1b2230 !important; /* force match to AdminClasses card color */
+  border: 1px solid rgba(255,255,255,0.05) !important;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4) !important;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+.admin-quizzes-container .quiz-item:hover{
+  transform: translateY(-3px);
+  border-color: rgba(90,166,255,0.12);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.55);
+}
+.admin-quizzes-container .quiz-item-main{display:flex;align-items:center;gap:8px;color:var(--qq-form-text);font-size:0.98rem}
+.admin-quizzes-container .quiz-item-actions{display:flex;align-items:center;gap:8px}
+
+/* Edit button (subtle primary/purple) */
+.admin-quizzes-container .btn-edit-quiz{background:linear-gradient(90deg,#7c3aed,#5b21b6);color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+.admin-quizzes-container .btn-edit-quiz:hover{filter:brightness(0.98);transform:translateY(-1px)}
+
+/* Delete button (destructive red) */
+.admin-quizzes-container .btn-delete-quiz{background:linear-gradient(90deg,var(--qq-danger),#c53030);color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+.admin-quizzes-container .btn-delete-quiz:hover{filter:brightness(1.02);transform:translateY(-1px)}
+
+@media (max-width:720px){
+  .admin-quizzes-container .quiz-item{flex-direction:column;align-items:stretch}
+  .admin-quizzes-container .quiz-item-actions{justify-content:flex-end}
+}
