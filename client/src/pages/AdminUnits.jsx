@@ -118,19 +118,28 @@ const AdminUnits = () => {
   };
   const saveUnitEdit = async (id) => {
     try {
+      // Validate required fields
+      if (!editingUnitValues.title || editingUnitValues.title.trim() === "") {
+        toast.error("Title is required");
+        return;
+      }
+
       // If there are files selected to upload during edit, use multipart
       const formData = new FormData();
-      formData.append("title", editingUnitValues.title);
-      formData.append("description", editingUnitValues.description);
+      formData.append("title", editingUnitValues.title.trim());
+      formData.append("description", editingUnitValues.description || "");
+
       // append any newly chosen files for update
-      // include newly added files from videoItems/pdfItems
+      let hasVideos = false;
       for (let i = 0; i < videoItems.length; i++) {
         const it = videoItems[i];
         if (it && it.file) {
           formData.append("videos", it.file);
           formData.append("videoNames", it.name || it.file.name);
+          hasVideos = true;
         }
       }
+
       for (let i = 0; i < pdfItems.length; i++) {
         const it = pdfItems[i];
         if (it && it.file) {
@@ -140,34 +149,59 @@ const AdminUnits = () => {
       }
 
       // include removals and renames
-      editingRemovals.videos.forEach((u) =>
-        formData.append("removeVideoUrls", u)
-      );
-      editingRemovals.pdfs.forEach((u) => formData.append("removePdfUrls", u));
-      if (Object.keys(editingRenames.videos).length > 0) {
+      if (editingRemovals.videos && editingRemovals.videos.length > 0) {
+        editingRemovals.videos.forEach((u) =>
+          formData.append("removeVideoUrls", u)
+        );
+      }
+
+      if (editingRemovals.pdfs && editingRemovals.pdfs.length > 0) {
+        editingRemovals.pdfs.forEach((u) =>
+          formData.append("removePdfUrls", u)
+        );
+      }
+
+      if (Object.keys(editingRenames.videos || {}).length > 0) {
         formData.append(
           "renameVideoNames",
           JSON.stringify(editingRenames.videos)
         );
       }
-      if (Object.keys(editingRenames.pdfs).length > 0) {
+
+      if (Object.keys(editingRenames.pdfs || {}).length > 0) {
         formData.append("renamePdfNames", JSON.stringify(editingRenames.pdfs));
       }
 
-      await axios.put(
+      const response = await axios.put(
         `http://localhost:5000/api/units/update/${id}`,
         formData,
         {
-          headers: { Authorization: `Bearer ${auth.token}` },
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
         }
       );
-      toast.success("Unit updated");
-      setEditingUnitId(null);
-      setVideoItems([{ name: "", file: null }]);
-      setPdfItems([{ name: "", file: null }]);
-      fetchUnits(selectedSubject);
+
+      if (response.data && response.data.unit) {
+        toast.success("Unit updated successfully");
+        setEditingUnitId(null);
+        setVideoItems([{ name: "", file: null }]);
+        setPdfItems([{ name: "", file: null }]);
+        fetchUnits(selectedSubject);
+      } else {
+        toast.error("Update response missing unit data");
+      }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to update unit");
+      console.error(
+        "Unit update error:",
+        error.response?.data || error.message
+      );
+      const errorMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Failed to update unit";
+      toast.error(errorMessage);
     }
   };
 

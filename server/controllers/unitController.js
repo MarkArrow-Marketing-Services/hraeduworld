@@ -1,8 +1,36 @@
 const Unit = require("../models/Unit");
-const fs = require("fs");
+const fs = require("fs").promises;
+const fsSync = require("fs");
 const path = require("path");
 const Quiz = require("../models/Quiz");
 const Student = require("../models/Student");
+
+// Helper function to safely delete a file
+const safeDeleteFile = async (filePath) => {
+  try {
+    // Check if file exists
+    const exists = fsSync.existsSync(filePath);
+    if (!exists) {
+      console.log(`File does not exist: ${filePath}`);
+      return;
+    }
+
+    // Attempt to delete the file
+    await fs.unlink(filePath);
+    console.log(`Successfully deleted file: ${filePath}`);
+  } catch (error) {
+    console.error(`Error deleting file ${filePath}:`, error);
+    // Retry once with sync method as fallback
+    try {
+      if (fsSync.existsSync(filePath)) {
+        fsSync.unlinkSync(filePath);
+        console.log(`Successfully deleted file on retry: ${filePath}`);
+      }
+    } catch (retryError) {
+      console.error(`Failed to delete file on retry ${filePath}:`, retryError);
+    }
+  }
+};
 
 // Create Unit with uploaded files
 exports.createUnit = async (req, res) => {
@@ -131,30 +159,75 @@ exports.getUnitsBySubject = async (req, res) => {
 
 // Update unit by id
 exports.updateUnit = async (req, res) => {
+  // Start with detailed request logging
+  console.log("\n=== Update Unit Request ===");
+  console.log("Unit ID:", req.params.id);
+  console.log("Title:", req.body.title);
+  console.log("Description:", req.body.description);
+  console.log(
+    "Files received:",
+    req.files ? Object.keys(req.files) : "No files"
+  );
+  console.log("=========================\n");
   try {
+    // Log request details
+    console.log("=== Update Unit Request ===");
+    console.log("Params:", req.params);
+    console.log("Body:", JSON.stringify(req.body, null, 2));
+    console.log(
+      "Files:",
+      req.files
+        ? Object.keys(req.files).map((key) => ({
+            key,
+            count: req.files[key].length,
+          }))
+        : "No files"
+    );
+
+    // Input validation
+    if (!req.params.id) {
+      return res.status(400).json({
+        message: "Unit ID is required",
+        error: "Missing unit ID in request parameters",
+      });
+    }
+
     const { id } = req.params;
     const unit = await Unit.findById(id);
     if (!unit) return res.status(404).json({ message: "Unit not found" });
 
-    // Validate title if provided (it's required)
-    if (req.body.hasOwnProperty("title")) {
-      if (!req.body.title) {
+    // Ensure resources object exists
+    if (!unit.resources) {
+      unit.resources = { videos: [], pdfs: [] };
+    }
+    if (!unit.resources.videos) unit.resources.videos = [];
+    if (!unit.resources.pdfs) unit.resources.pdfs = []; // Validate title if provided (it's required)
+    // Update title if provided
+    const title = req.body.title;
+    if (title !== undefined) {
+      if (!title || title.trim() === "") {
         return res.status(400).json({
           message: "Title is required",
           details: { title: "Title cannot be empty" },
         });
       }
-      unit.title = req.body.title;
+      unit.title = title.trim();
     }
 
-    // Update description if provided (optional)
-    if (req.body.hasOwnProperty("description")) {
-      unit.description = req.body.description;
+    // Update description if provided
+    const description = req.body.description;
+    if (description !== undefined) {
+      unit.description = description || "";
     }
 
     // If files are uploaded during update, append them to resources
     const videoFiles = (req.files && req.files["videos"]) || [];
     const pdfFiles = (req.files && req.files["pdfs"]) || [];
+
+    console.log("Processing files:", {
+      videoFiles: videoFiles.length,
+      pdfFiles: pdfFiles.length,
+    });
 
     const videoNames = Array.isArray(req.body.videoNames)
       ? req.body.videoNames
@@ -167,19 +240,36 @@ exports.updateUnit = async (req, res) => {
       ? [req.body.pdfNames]
       : [];
 
-    for (let i = 0; i < videoFiles.length; i++) {
-      const file = videoFiles[i];
-      unit.resources.videos.push({
-        url: `/uploads/${file.filename}`,
-        name: videoNames[i] || file.originalname,
-      });
-    }
+    console.log("Processing names:", {
+      videoNames: videoNames.length,
+      pdfNames: pdfNames.length,
+    });
 
-    for (let i = 0; i < pdfFiles.length; i++) {
-      const file = pdfFiles[i];
-      unit.resources.pdfs.push({
-        url: `/uploads/${file.filename}`,
-        name: pdfNames[i] || file.originalname,
+    try {
+      for (let i = 0; i < videoFiles.length; i++) {
+        const file = videoFiles[i];
+        if (file && file.filename) {
+          unit.resources.videos.push({
+            url: `/uploads/${file.filename}`,
+            name: videoNames[i] || file.originalname || `Video ${i + 1}`,
+          });
+        }
+      }
+
+      for (let i = 0; i < pdfFiles.length; i++) {
+        const file = pdfFiles[i];
+        if (file && file.filename) {
+          unit.resources.pdfs.push({
+            url: `/uploads/${file.filename}`,
+            name: pdfNames[i] || file.originalname || `PDF ${i + 1}`,
+          });
+        }
+      }
+    } catch (e) {
+      console.error("Error processing uploaded files:", e);
+      return res.status(400).json({
+        message: "Error processing uploaded files",
+        error: e.message,
       });
     }
 
@@ -199,25 +289,27 @@ exports.updateUnit = async (req, res) => {
     // Support renaming existing resources: client can send renameVideoNames as a JSON string or object mapping url->newName
     let renameVideoNames = {};
     let renamePdfNames = {};
-    if (req.body.renameVideoNames) {
-      try {
+    try {
+      if (req.body.renameVideoNames) {
         renameVideoNames =
           typeof req.body.renameVideoNames === "string"
             ? JSON.parse(req.body.renameVideoNames)
             : req.body.renameVideoNames;
-      } catch (e) {
-        console.warn("Failed to parse renameVideoNames", e.message);
+        console.log("Video renames:", renameVideoNames);
       }
-    }
-    if (req.body.renamePdfNames) {
-      try {
+      if (req.body.renamePdfNames) {
         renamePdfNames =
           typeof req.body.renamePdfNames === "string"
             ? JSON.parse(req.body.renamePdfNames)
             : req.body.renamePdfNames;
-      } catch (e) {
-        console.warn("Failed to parse renamePdfNames", e.message);
+        console.log("PDF renames:", renamePdfNames);
       }
+    } catch (e) {
+      console.error("Error parsing rename data:", e);
+      return res.status(400).json({
+        message: "Invalid rename data format",
+        error: e.message,
+      });
     }
 
     // apply rename maps
@@ -235,6 +327,8 @@ exports.updateUnit = async (req, res) => {
     }
 
     if (removeVideoUrls.length > 0) {
+      console.log("Processing video removals:", removeVideoUrls);
+
       // Check if removing videos would leave the unit with no videos
       const remainingVideos = unit.resources.videos.filter(
         (v) => !removeVideoUrls.includes(v.url)
@@ -251,78 +345,78 @@ exports.updateUnit = async (req, res) => {
       }
 
       unit.resources.videos = remainingVideos;
-      // also attempt to unlink files from disk
-      removeVideoUrls.forEach((u) => {
+
+      // Delete files from disk
+      for (const u of removeVideoUrls) {
         const fileName = u.replace(/^\/uploads\//, "");
-        const p = path.join(__dirname, "..", "uploads", fileName);
-        if (fs.existsSync(p)) {
-          try {
-            fs.unlinkSync(p);
-            console.log("updateUnit: unlinked video", p);
-          } catch (e) {
-            console.error("Failed to unlink video", p, e.message);
-            // Try again with a small delay
-            setTimeout(() => {
-              try {
-                if (fs.existsSync(p)) {
-                  fs.unlinkSync(p);
-                  console.log("updateUnit: unlinked video on retry", p);
-                }
-              } catch (retryError) {
-                console.error(
-                  "Failed to unlink video on retry",
-                  p,
-                  retryError.message
-                );
-              }
-            }, 100);
-          }
-        } else {
-          console.log("updateUnit: video file does not exist", p);
-        }
-      });
+        const filePath = path.join(__dirname, "..", "uploads", fileName);
+        await safeDeleteFile(filePath);
+      }
     }
 
     if (removePdfUrls.length > 0) {
       unit.resources.pdfs = unit.resources.pdfs.filter(
         (p) => !removePdfUrls.includes(p.url)
       );
-      removePdfUrls.forEach((u) => {
+      // Delete PDF files from disk
+      for (const u of removePdfUrls) {
         const fileName = u.replace(/^\/uploads\//, "");
-        const p = path.join(__dirname, "..", "uploads", fileName);
-        if (fs.existsSync(p)) {
-          try {
-            fs.unlinkSync(p);
-            console.log("updateUnit: unlinked pdf", p);
-          } catch (e) {
-            console.error("Failed to unlink pdf", p, e.message);
-            // Try again with a small delay
-            setTimeout(() => {
-              try {
-                if (fs.existsSync(p)) {
-                  fs.unlinkSync(p);
-                  console.log("updateUnit: unlinked pdf on retry", p);
-                }
-              } catch (retryError) {
-                console.error(
-                  "Failed to unlink pdf on retry",
-                  p,
-                  retryError.message
-                );
-              }
-            }, 100);
-          }
-        } else {
-          console.log("updateUnit: pdf file does not exist", p);
-        }
+        const filePath = path.join(__dirname, "..", "uploads", fileName);
+        await safeDeleteFile(filePath);
+      }
+    }
+
+    try {
+      console.log(
+        "Attempting to save unit:",
+        JSON.stringify(unit.toObject(), null, 2)
+      );
+      const savedUnit = await unit.save();
+      console.log("Unit saved successfully");
+      res.json({ message: "Unit updated successfully", unit: savedUnit });
+    } catch (saveError) {
+      console.error("Error saving unit:", {
+        error: saveError.message,
+        validationErrors: saveError.errors,
+        stack: saveError.stack,
+      });
+      return res.status(500).json({
+        message: "Failed to save unit changes",
+        error: saveError.message,
+        validationErrors: saveError.errors,
+      });
+    }
+  } catch (error) {
+    console.error("Error updating unit:", {
+      type: error.name,
+      message: error.message,
+      stack: error.stack,
+      body: req.body,
+      files: req.files ? Object.keys(req.files) : null,
+      validationErrors: error.errors,
+    });
+
+    // Handle different types of errors
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        message: "Validation failed",
+        error: Object.values(error.errors)
+          .map((err) => err.message)
+          .join(", "),
       });
     }
 
-    await unit.save();
-    res.json({ message: "Unit updated", unit });
-  } catch (error) {
-    console.error("Error updating unit:", error);
-    res.status(500).json({ message: "Server error" });
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        message: "Invalid unit ID",
+        error: "The provided unit ID is not valid",
+      });
+    }
+
+    return res.status(500).json({
+      message: "Failed to update unit",
+      error: error.message || "Unknown error occurred",
+    });
   }
 };
 
@@ -346,26 +440,12 @@ exports.deleteUnit = async (req, res) => {
     console.log("deleteUnit: unit.resources=", JSON.stringify(unit.resources));
     console.log("deleteUnit: allFiles=", allFiles);
 
-    allFiles.forEach((u) => {
-      try {
-        // Remove leading slash and 'uploads' from the URL if present
-        const fileName = u.replace(/^\/uploads\//, "");
-        const p = path.join(__dirname, "..", "uploads", fileName);
-        console.log("deleteUnit: attempting unlink", p);
-        if (fs.existsSync(p)) {
-          try {
-            fs.unlinkSync(p);
-            console.log("deleteUnit: unlinked", p);
-          } catch (e) {
-            console.warn("Failed to unlink file", p, e.message);
-          }
-        } else {
-          console.log("deleteUnit: file does not exist, skipping", p);
-        }
-      } catch (e) {
-        console.warn("deleteUnit: error while handling file", u, e.message);
-      }
-    });
+    // Delete all files from disk
+    for (const u of allFiles) {
+      const fileName = u.replace(/^\/uploads\//, "");
+      const filePath = path.join(__dirname, "..", "uploads", fileName);
+      await safeDeleteFile(filePath);
+    }
 
     // Delete quizzes attached to this unit and remove quizProgress references from students
     try {

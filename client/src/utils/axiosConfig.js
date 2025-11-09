@@ -29,11 +29,12 @@ axios.interceptors.response.use(
   (error) => {
     // Log server-provided error details to console for easier debugging
     if (error && error.response) {
-      console.warn(
-        "API response error:",
-        error.response.status,
-        error.response.data
-      );
+      console.error("API Error Details:", {
+        status: error.response.status,
+        data: error.response.data,
+        message: error.response.data?.message,
+        error: error.response.data?.error,
+      });
       // If auth failed or forbidden, clear stored auth and redirect to login
       if (error.response.status === 401 || error.response.status === 403) {
         try {
