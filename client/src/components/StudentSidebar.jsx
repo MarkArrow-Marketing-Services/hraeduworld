@@ -26,7 +26,7 @@ const StudentSidebar = () => {
       setError(null);
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/student/classes",
+          "https://hraeduworld-backend.onrender.com/api/student/classes",
           {
             headers: { Authorization: `Bearer ${auth.token}` },
           }
@@ -42,7 +42,7 @@ const StudentSidebar = () => {
           ) {
             try {
               const sres = await axios.get(
-                `http://localhost:5000/api/subjects/${c._id}`,
+                `https://hraeduworld-backend.onrender.com/api/subjects/${c._id}`,
                 {
                   headers: { Authorization: `Bearer ${auth.token}` },
                 }
@@ -61,7 +61,7 @@ const StudentSidebar = () => {
             }
             try {
               const ures = await axios.get(
-                `http://localhost:5000/api/units/${sid}`,
+                `https://hraeduworld-backend.onrender.com/api/units/${sid}`,
                 {
                   headers: { Authorization: `Bearer ${auth.token}` },
                 }
@@ -77,7 +77,7 @@ const StudentSidebar = () => {
 
         try {
           const pres = await axios.get(
-            "http://localhost:5000/api/student/progress-detailed",
+            "https://hraeduworld-backend.onrender.com/api/student/progress-detailed",
             {
               headers: { Authorization: `Bearer ${auth.token}` },
             }

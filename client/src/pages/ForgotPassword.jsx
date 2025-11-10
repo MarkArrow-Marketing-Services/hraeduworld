@@ -12,7 +12,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/password/send-code",
+        "https://hraeduworld-backend.onrender.com/api/password/send-code",
         {
           email,
         }

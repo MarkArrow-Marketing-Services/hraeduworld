@@ -54,9 +54,12 @@ const AdminQuizzes = () => {
 
   const fetchClasses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/classes", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/classes",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setClasses(res.data);
       if (res.data.length > 0) setSelectedClass(res.data[0]._id);
     } catch (error) {
@@ -67,7 +70,7 @@ const AdminQuizzes = () => {
   const fetchSubjects = async (classId) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/subjects/${classId}`,
+        `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -82,7 +85,7 @@ const AdminQuizzes = () => {
   const fetchUnits = async (subjectId) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/units/${subjectId}`,
+        `https://hraeduworld-backend.onrender.com/api/units/${subjectId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -97,7 +100,7 @@ const AdminQuizzes = () => {
   const fetchQuizzes = async (unitId) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/quizzes/${unitId}`,
+        `https://hraeduworld-backend.onrender.com/api/quizzes/${unitId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -164,7 +167,7 @@ const AdminQuizzes = () => {
     }
     try {
       await axios.post(
-        "http://localhost:5000/api/quizzes",
+        "https://hraeduworld-backend.onrender.com/api/quizzes",
         { unitId: selectedUnit, questions: createQuestions, name: quizName },
         { headers: { Authorization: `Bearer ${auth.token}` } }
       );
@@ -329,7 +332,7 @@ const AdminQuizzes = () => {
                         if (!confirm("Delete this quiz?")) return;
                         try {
                           await axios.delete(
-                            `http://localhost:5000/api/quizzes/${q._id}`,
+                            `https://hraeduworld-backend.onrender.com/api/quizzes/${q._id}`,
                             {
                               headers: {
                                 Authorization: `Bearer ${auth.token}`,
@@ -418,7 +421,7 @@ const AdminQuizzes = () => {
             onClick={async () => {
               try {
                 await axios.put(
-                  `http://localhost:5000/api/quizzes/${editingQuizId}`,
+                  `https://hraeduworld-backend.onrender.com/api/quizzes/${editingQuizId}`,
                   { name: editingQuizName, questions: editQuestions },
                   { headers: { Authorization: `Bearer ${auth.token}` } }
                 );

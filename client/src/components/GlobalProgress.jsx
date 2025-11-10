@@ -15,7 +15,7 @@ const GlobalProgress = ({ compact = false }) => {
     const fetchProgress = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/student/progress",
+          "https://hraeduworld-backend.onrender.com/api/student/progress",
           {
             headers: { Authorization: `Bearer ${auth.token}` },
           }

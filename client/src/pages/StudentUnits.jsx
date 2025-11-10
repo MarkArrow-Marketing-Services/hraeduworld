@@ -36,7 +36,7 @@ const StudentUnits = () => {
   const fetchDetailedProgress = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/student/progress-detailed",
+        "https://hraeduworld-backend.onrender.com/api/student/progress-detailed",
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -53,9 +53,12 @@ const StudentUnits = () => {
 
   const fetchEnrolledClasses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/student/classes", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/student/classes",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setClasses(res.data);
       // selection handled via sidebar navigation
     } catch (error) {
@@ -66,7 +69,7 @@ const StudentUnits = () => {
   const fetchSubjects = async (classId) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/subjects/${classId}`,
+        `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -81,7 +84,7 @@ const StudentUnits = () => {
   const fetchUnits = async (subjectId) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/units/${subjectId}`,
+        `https://hraeduworld-backend.onrender.com/api/units/${subjectId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -92,7 +95,7 @@ const StudentUnits = () => {
         unitsData.map(async (u) => {
           try {
             const qres = await axios.get(
-              `http://localhost:5000/api/quizzes/${u._id}`,
+              `https://hraeduworld-backend.onrender.com/api/quizzes/${u._id}`,
               { headers: { Authorization: `Bearer ${auth.token}` } }
             );
             const qdata = qres.data;
@@ -187,7 +190,9 @@ const StudentUnits = () => {
                         className="resource-button"
                         onClick={() =>
                           setPlaying({
-                            url: `http://localhost:5000${video.url || video}`,
+                            url: `https://hraeduworld-backend.onrender.com${
+                              video.url || video
+                            }`,
                             name: video.name || `Video ${idx + 1}`,
                           })
                         }
@@ -234,7 +239,7 @@ const StudentUnits = () => {
                       onClick={async () => {
                         try {
                           const res = await axios.post(
-                            "http://localhost:5000/api/student/resource-progress",
+                            "https://hraeduworld-backend.onrender.com/api/student/resource-progress",
                             {
                               unitId: selectedUnit._id,
                               resourceType: "pdf",
@@ -261,7 +266,9 @@ const StudentUnits = () => {
                             } catch (e) {}
                           } catch (e) {}
                           window.open(
-                            `http://localhost:5000${pdf.url || pdf}`,
+                            `https://hraeduworld-backend.onrender.com${
+                              pdf.url || pdf
+                            }`,
                             "_blank"
                           );
                         } catch (err) {}
@@ -326,7 +333,7 @@ const StudentUnits = () => {
               onEnded={async () => {
                 try {
                   const res = await axios.post(
-                    "http://localhost:5000/api/student/resource-progress",
+                    "https://hraeduworld-backend.onrender.com/api/student/resource-progress",
                     {
                       unitId: selectedUnit._id,
                       resourceType: "video",

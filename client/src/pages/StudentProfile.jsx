@@ -18,9 +18,12 @@ const StudentProfile = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/student/profile", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/student/profile",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setProfile(res.data);
       setForm({
         name: res.data.name || "",
@@ -39,9 +42,13 @@ const StudentProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("http://localhost:5000/api/student/profile", form, {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      await axios.put(
+        "https://hraeduworld-backend.onrender.com/api/student/profile",
+        form,
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       toast.success("Profile updated successfully");
       setEditing(false);
       fetchProfile();

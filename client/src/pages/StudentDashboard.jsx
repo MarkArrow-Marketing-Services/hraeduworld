@@ -33,9 +33,12 @@ const StudentDashboard = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/student/profile", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/student/profile",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setStudentName(res.data?.name || res.data?.username || "Student");
     } catch (err) {
       // ignore
@@ -44,9 +47,12 @@ const StudentDashboard = () => {
 
   const fetchEnrolledClasses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/student/classes", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/student/classes",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setEnrolledClasses(res.data);
     } catch (error) {
       toast.error("Failed to fetch enrolled classes");
@@ -58,7 +64,7 @@ const StudentDashboard = () => {
   const fetchQuizHistory = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/student/quiz-history",
+        "https://hraeduworld-backend.onrender.com/api/student/quiz-history",
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -72,7 +78,7 @@ const StudentDashboard = () => {
   const fetchDetailedProgress = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/student/progress-detailed",
+        "https://hraeduworld-backend.onrender.com/api/student/progress-detailed",
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -99,7 +105,7 @@ const StudentDashboard = () => {
           subjects = cls.subjects;
         } else {
           const allRes = await axios.get(
-            `http://localhost:5000/api/subjects/${classId}`,
+            `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
             { headers: { Authorization: `Bearer ${auth.token}` } }
           );
           const allSubjects = allRes.data || [];
@@ -108,7 +114,7 @@ const StudentDashboard = () => {
         }
       } else {
         const res = await axios.get(
-          `http://localhost:5000/api/subjects/${classId}`,
+          `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
           { headers: { Authorization: `Bearer ${auth.token}` } }
         );
         subjects = res.data || [];
@@ -118,7 +124,7 @@ const StudentDashboard = () => {
         subjects.map(async (s) => {
           try {
             const ures = await axios.get(
-              `http://localhost:5000/api/units/${s._id}`,
+              `https://hraeduworld-backend.onrender.com/api/units/${s._id}`,
               { headers: { Authorization: `Bearer ${auth.token}` } }
             );
             return {

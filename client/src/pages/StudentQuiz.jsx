@@ -32,7 +32,7 @@ const StudentQuiz = () => {
   const fetchUnits = async (preferUnitId = null, skipFetchQuiz = false) => {
     try {
       const resClasses = await axios.get(
-        "http://localhost:5000/api/student/classes",
+        "https://hraeduworld-backend.onrender.com/api/student/classes",
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -44,7 +44,7 @@ const StudentQuiz = () => {
       // Simplify: fetch units for first class's first subject
       const classId = resClasses.data[0]._id;
       const resSubjects = await axios.get(
-        `http://localhost:5000/api/subjects/${classId}`,
+        `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -55,7 +55,7 @@ const StudentQuiz = () => {
       }
       const subjectId = resSubjects.data[0]._id;
       const resUnits = await axios.get(
-        `http://localhost:5000/api/units/${subjectId}`,
+        `https://hraeduworld-backend.onrender.com/api/units/${subjectId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -83,7 +83,7 @@ const StudentQuiz = () => {
   const fetchQuiz = async (unitId, preferQuizId = null) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/quizzes/${unitId}`,
+        `https://hraeduworld-backend.onrender.com/api/quizzes/${unitId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -140,7 +140,7 @@ const StudentQuiz = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/student/quiz-progress",
+        "https://hraeduworld-backend.onrender.com/api/student/quiz-progress",
         { quizId: quiz._id, score: calculatedScore },
         { headers: { Authorization: `Bearer ${auth.token}` } }
       );

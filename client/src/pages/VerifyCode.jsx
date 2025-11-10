@@ -18,10 +18,13 @@ const VerifyCode = () => {
   const handleVerify = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/password/verify-code", {
-        email,
-        code,
-      });
+      await axios.post(
+        "https://hraeduworld-backend.onrender.com/api/password/verify-code",
+        {
+          email,
+          code,
+        }
+      );
       toast.success("Code verified");
       navigate("/reset-password", { state: { email, code } });
     } catch (error) {

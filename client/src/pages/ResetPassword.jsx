@@ -14,11 +14,14 @@ const ResetPassword = () => {
   const handleReset = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/password/reset", {
-        email,
-        code,
-        newPassword,
-      });
+      await axios.post(
+        "https://hraeduworld-backend.onrender.com/api/password/reset",
+        {
+          email,
+          code,
+          newPassword,
+        }
+      );
       toast.success("Password changed successfully");
       navigate("/login");
     } catch (error) {

@@ -35,9 +35,12 @@ const AddStudent = () => {
 
   const fetchClasses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/classes", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/classes",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setClasses(res.data);
     } catch {
       toast.error("Failed to fetch classes");
@@ -47,7 +50,7 @@ const AddStudent = () => {
   const fetchSubjectsForClass = async (classId) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/subjects/${classId}`,
+        `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
         { headers: { Authorization: `Bearer ${auth.token}` } }
       );
       return res.data;
@@ -175,9 +178,13 @@ const AddStudent = () => {
         classIds: selectedClasses,
         subjectIds: selectedSubjectIds,
       };
-      await axios.post("http://localhost:5000/api/admin/create-user", payload, {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      await axios.post(
+        "https://hraeduworld-backend.onrender.com/api/admin/create-user",
+        payload,
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       toast.success(
         `${
           role === "admin" ? "Admin" : "Student"
@@ -196,9 +203,12 @@ const AddStudent = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/users", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/admin/users",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setStudentsList(res.data || []);
     } catch {
       toast.error("Failed to fetch students");
@@ -237,8 +247,8 @@ const AddStudent = () => {
 
       const url =
         editRole === "admin"
-          ? `http://localhost:5000/api/admin/admins/${id}`
-          : `http://localhost:5000/api/admin/students/${id}`;
+          ? `https://hraeduworld-backend.onrender.com/api/admin/admins/${id}`
+          : `https://hraeduworld-backend.onrender.com/api/admin/students/${id}`;
 
       await axios.put(url, payload, {
         headers: { Authorization: `Bearer ${auth.token}` },
@@ -257,8 +267,8 @@ const AddStudent = () => {
     try {
       const url =
         role === "admin"
-          ? `http://localhost:5000/api/admin/admins/${id}`
-          : `http://localhost:5000/api/admin/students/${id}`;
+          ? `https://hraeduworld-backend.onrender.com/api/admin/admins/${id}`
+          : `https://hraeduworld-backend.onrender.com/api/admin/students/${id}`;
 
       await axios.delete(url, {
         headers: { Authorization: `Bearer ${auth.token}` },

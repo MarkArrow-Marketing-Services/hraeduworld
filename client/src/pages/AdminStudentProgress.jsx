@@ -18,9 +18,12 @@ const AdminStudentProgress = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/students", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/admin/students",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setStudents(res.data || []);
     } catch (err) {
       toast.error("Failed to fetch students");
@@ -34,13 +37,13 @@ const AdminStudentProgress = () => {
     try {
       const [dRes, qRes] = await Promise.all([
         axios.get(
-          `http://localhost:5000/api/admin/students/${s._id}/progress`,
+          `https://hraeduworld-backend.onrender.com/api/admin/students/${s._id}/progress`,
           {
             headers: { Authorization: `Bearer ${auth.token}` },
           }
         ),
         axios.get(
-          `http://localhost:5000/api/admin/students/${s._id}/quiz-history`,
+          `https://hraeduworld-backend.onrender.com/api/admin/students/${s._id}/quiz-history`,
           {
             headers: { Authorization: `Bearer ${auth.token}` },
           }

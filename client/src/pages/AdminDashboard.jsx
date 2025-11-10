@@ -23,9 +23,12 @@ const AdminDashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/stats", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/admin/stats",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setStats(res.data);
     } catch {
       toast.error("Failed to load stats");
@@ -34,9 +37,12 @@ const AdminDashboard = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/students", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/admin/students",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       const onlyStudents = (res.data || []).filter((u) => u.role === "student");
       setStudents(onlyStudents);
     } catch (err) {
@@ -52,11 +58,11 @@ const AdminDashboard = () => {
     try {
       const [pRes, qRes] = await Promise.all([
         axios.get(
-          `http://localhost:5000/api/admin/students/${s._id}/progress`,
+          `https://hraeduworld-backend.onrender.com/api/admin/students/${s._id}/progress`,
           { headers: { Authorization: `Bearer ${auth.token}` } }
         ),
         axios.get(
-          `http://localhost:5000/api/admin/students/${s._id}/quiz-history`,
+          `https://hraeduworld-backend.onrender.com/api/admin/students/${s._id}/quiz-history`,
           { headers: { Authorization: `Bearer ${auth.token}` } }
         ),
       ]);

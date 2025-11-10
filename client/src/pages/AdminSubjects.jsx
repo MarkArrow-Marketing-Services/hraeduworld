@@ -32,9 +32,12 @@ const AdminSubjects = () => {
 
   const fetchClasses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/classes", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/classes",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setClasses(res.data);
       if (!selectedClass && res.data.length > 0)
         setSelectedClass(res.data[0]._id);
@@ -46,7 +49,7 @@ const AdminSubjects = () => {
   const fetchSubjects = async (classId) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/subjects/${classId}`,
+        `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -65,7 +68,7 @@ const AdminSubjects = () => {
     }
     try {
       await axios.post(
-        "http://localhost:5000/api/subjects",
+        "https://hraeduworld-backend.onrender.com/api/subjects",
         {
           name: subjectName,
           description: subjectDescription,
@@ -97,9 +100,13 @@ const AdminSubjects = () => {
 
   const saveEdit = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/subjects/${id}`, editValues, {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      await axios.put(
+        `https://hraeduworld-backend.onrender.com/api/subjects/${id}`,
+        editValues,
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       toast.success("Subject updated");
       cancelEdit();
       fetchSubjects(selectedClass);
@@ -111,9 +118,12 @@ const AdminSubjects = () => {
   const removeSubject = async (id) => {
     if (!window.confirm("Delete this subject?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/subjects/${id}`, {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      await axios.delete(
+        `https://hraeduworld-backend.onrender.com/api/subjects/${id}`,
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       toast.success("Subject deleted");
       fetchSubjects(selectedClass);
     } catch (error) {

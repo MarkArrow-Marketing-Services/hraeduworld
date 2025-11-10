@@ -42,9 +42,12 @@ const AdminUnits = () => {
 
   const fetchClasses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/classes", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/classes",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setClasses(res.data);
       if (res.data.length > 0) setSelectedClass(res.data[0]._id);
     } catch (error) {
@@ -55,7 +58,7 @@ const AdminUnits = () => {
   const fetchSubjects = async (classId) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/subjects/${classId}`,
+        `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -70,7 +73,7 @@ const AdminUnits = () => {
   const fetchUnits = async (subjectId) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/units/${subjectId}`,
+        `https://hraeduworld-backend.onrender.com/api/units/${subjectId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -84,9 +87,12 @@ const AdminUnits = () => {
   const deleteUnit = async (unitId) => {
     if (!window.confirm("Delete this unit?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/units/delete/${unitId}`, {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      await axios.delete(
+        `https://hraeduworld-backend.onrender.com/api/units/delete/${unitId}`,
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       toast.success("Unit deleted");
       fetchUnits(selectedSubject);
     } catch (error) {
@@ -173,7 +179,7 @@ const AdminUnits = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:5000/api/units/update/${id}`,
+        `https://hraeduworld-backend.onrender.com/api/units/update/${id}`,
         formData,
         {
           headers: {
@@ -292,11 +298,15 @@ const AdminUnits = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/units", formData, {
-        headers: {
-          Authorization: `Bearer ${auth.token}`,
-        },
-      });
+      await axios.post(
+        "https://hraeduworld-backend.onrender.com/api/units",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
       toast.success("Unit added successfully");
       setTitle("");
       setDescription("");
@@ -623,7 +633,7 @@ const AdminUnits = () => {
                               className="resource-link"
                               onClick={() =>
                                 setPlaying({
-                                  url: `http://localhost:5000${video.url}`,
+                                  url: `https://hraeduworld-backend.onrender.com${video.url}`,
                                   name: video.name,
                                 })
                               }
@@ -643,7 +653,7 @@ const AdminUnits = () => {
                           </div>
                           <div>
                             <a
-                              href={`http://localhost:5000${pdf.url}`}
+                              href={`https://hraeduworld-backend.onrender.com${pdf.url}`}
                               target="_blank"
                               rel="noreferrer"
                             >

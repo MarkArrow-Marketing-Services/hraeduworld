@@ -17,9 +17,12 @@ const AdminClasses = () => {
 
   const fetchClasses = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/classes", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/classes",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setClasses(res.data);
     } catch (error) {
       toast.error("Failed to fetch classes");
@@ -31,7 +34,7 @@ const AdminClasses = () => {
     try {
       if (editing) {
         await axios.put(
-          `http://localhost:5000/api/classes/${editing}`,
+          `https://hraeduworld-backend.onrender.com/api/classes/${editing}`,
           { name },
           { headers: { Authorization: `Bearer ${auth.token}` } }
         );
@@ -39,7 +42,7 @@ const AdminClasses = () => {
         setEditing(null);
       } else {
         await axios.post(
-          "http://localhost:5000/api/classes",
+          "https://hraeduworld-backend.onrender.com/api/classes",
           { name },
           { headers: { Authorization: `Bearer ${auth.token}` } }
         );
@@ -60,9 +63,12 @@ const AdminClasses = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this class?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/classes/${id}`, {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      await axios.delete(
+        `https://hraeduworld-backend.onrender.com/api/classes/${id}`,
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       toast.success("Class deleted");
       fetchClasses();
     } catch (error) {

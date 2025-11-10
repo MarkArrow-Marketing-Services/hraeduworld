@@ -15,9 +15,12 @@ const AdminProfile = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/profile", {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      const res = await axios.get(
+        "https://hraeduworld-backend.onrender.com/api/admin/profile",
+        {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        }
+      );
       setProfile(res.data);
     } catch (err) {
       toast.error("Failed to fetch profile");

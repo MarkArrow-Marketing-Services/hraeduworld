@@ -3,7 +3,8 @@ import axios from "axios";
 // Central axios configuration used across the app
 // In Vite (client-side) use import.meta.env.VITE_* for environment variables.
 // `process` is not defined in the browser which caused the runtime error.
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE =
+  import.meta.env.VITE_API_URL || "https://hraeduworld-backend.onrender.com";
 
 axios.defaults.baseURL = API_BASE;
 // Attach token from localStorage automatically
