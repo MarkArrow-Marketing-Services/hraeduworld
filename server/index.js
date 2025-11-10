@@ -14,7 +14,14 @@ connectDB();
 // Middleware
 // Allow CORS from frontend origin (configured via .env) or default to localhost:5173
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || "http://localhost:5173";
-app.use(cors({ origin: FRONTEND_ORIGIN }));
+// app.use(cors({ origin: FRONTEND_ORIGIN }));
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
+
 app.use(express.json()); // Parse JSON request bodies
 
 // Routes placeholder (to add later)
