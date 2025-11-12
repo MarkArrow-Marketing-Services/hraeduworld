@@ -1,6 +1,6 @@
 /* ===========================
    AddStudent.css
-   Professional Dark Glass UI
+   Professional Dark Glass UI (Fully Responsive)
 =========================== */
 
 :root {
@@ -21,9 +21,12 @@
   font-family: "Inter", sans-serif;
 }
 
+/* ===== Body ===== */
 body {
   background: linear-gradient(135deg, #1c1c1c, #2c2c2c);
   color: var(--text-light);
+  margin: 0;
+  padding: 0;
 }
 
 /* ===== Main Container ===== */
@@ -33,6 +36,7 @@ body {
   align-items: flex-start;
   padding: 2rem;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* ===== Glass Card ===== */
@@ -47,7 +51,6 @@ body {
   max-width: 950px;
   color: var(--text-light);
   transition: var(--transition);
-  
 }
 
 .card h2,
@@ -74,6 +77,8 @@ body {
   color: var(--text-light);
   outline: none;
   transition: var(--transition);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .add-student-form input:focus,
@@ -91,6 +96,7 @@ body {
   cursor: pointer;
   font-weight: 600;
   transition: var(--transition);
+  width: 100%;
 }
 
 .add-student-form button:hover {
@@ -110,12 +116,6 @@ body {
   gap: 0.3rem 0.8rem;
   font-size: 0.8rem;
   margin-bottom: 1rem;
-}
-
-.condition-item {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
 }
 
 /* ===== Class & Subject Section ===== */
@@ -140,72 +140,33 @@ body {
   gap: 2rem;
   padding: 0.5rem 0.8rem;
   border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  flex-wrap: wrap;
 }
 
 /* Grade section */
 .class-left {
   display: flex;
   align-items: center;
-  gap: 6px !important; /* small explicit gap between checkbox and class name */
-  font-weight: 500;
-  /* Reserve fixed left column so name won't wrap below the checkbox */
-  /* reduce left column so grade label is closer to checkbox */
-  flex: 0 0 160px;
-  min-width: 150px;
-  white-space: nowrap;
-  justify-content: flex-start; /* ensure checkbox and text align to the left */
-  padding-left: 0; /* avoid accidental padding from other rules */
-  text-align: left !important;
-  padding: 0 !important;
-}
-
-/* Ensure checkbox and the class name text align on the same line */
-.class-left input[type="checkbox"] {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 0 !important; /* gap handles spacing */
-}
-.class-left strong,
-.class-left span,
-.class-left label {
-  display: inline-block;
-  vertical-align: middle;
-  line-height: 1;
-  margin-left: 0 !important; /* prevent accidental auto margins */
-  flex: 0 0 auto !important; /* prevent strong from expanding */
-  text-align: left !important;
-}
-
-/* Extra defensive rule: ensure the strong (class name) sits immediately after checkbox */
-.class-left > strong {
-  margin-left: 6px !important;
-  width: auto !important;
-  text-align: left !important;
-}
-
-/* small inline container for checkbox + class name to avoid outer label rules */
-.class-left .class-chip {
-  display: inline-flex;
-  align-items: center;
   gap: 6px;
+  flex: 0 0 160px;
+  min-width: 140px;
+  white-space: nowrap;
+  justify-content: flex-start;
+  text-align: left;
 }
 
-/* defensive: ensure label element itself doesn't center its children */
-.add-student-container .card .class-assign label[class="class-left"] {
-  justify-content: flex-start !important;
-  align-items: center !important;
-  padding: 0 !important;
-  text-align: left !important;
+.class-left input[type="checkbox"] {
+  accent-color: var(--accent-blue);
+  cursor: pointer;
 }
 
 /* Subject section */
 .subject-list {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 2rem;
-  flex-wrap: nowrap; /* Keeps them in one line */
-  overflow-x: auto; /* Enables horizontal scroll if too many subjects */
+  gap: 1rem;
+  overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-purple) transparent;
 }
@@ -222,17 +183,9 @@ body {
 .subject-item {
   display: flex;
   align-items: center;
-  gap: 6px; /* align with class-left spacing */
+  gap: 6px;
   font-size: 0.9rem;
-  color: var(--text-light);
   white-space: nowrap;
-}
-
-/* Checkbox accent */
-.subject-item input[type="checkbox"],
-.class-left input[type="checkbox"] {
-  accent-color: var(--accent-blue);
-  cursor: pointer;
 }
 
 /* ===== User List Section ===== */
@@ -249,6 +202,7 @@ body {
   padding: 0.6rem 1rem;
   color: var(--text-light);
   outline: none;
+  box-sizing: border-box;
 }
 
 .user-card {
@@ -265,26 +219,25 @@ body {
   transform: translateY(-2px);
 }
 
-/* User list: make static user view a single-row with actions aligned right */
 .user-card .user-view {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-}
-.user-card .user-view .user-details {
-  flex: 1 1 auto;
-}
-.user-card .user-view .actions {
-  margin-left: 12px;
-  flex: 0 0 auto;
+  flex-wrap: wrap;
 }
 
-/* ===== Buttons ===== */
+.user-details {
+  flex: 1 1 auto;
+  word-break: break-word;
+}
+
 .actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.6rem;
   margin-top: 0.8rem;
+  justify-content: flex-end;
 }
 
 .actions button,
@@ -298,7 +251,6 @@ body {
   transition: var(--transition);
 }
 
-/* Different button colors */
 .actions button:nth-child(1),
 .user-card button:nth-child(1) {
   background: var(--accent-green);
@@ -315,77 +267,15 @@ body {
   transform: scale(1.03);
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .class-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .subject-list {
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-}
-
-/* ===== Defensive overrides (very specific) =====
-   Ensure any global or page-scoped CSS does not force labels/inputs to block-level
-   which would push subjects onto new lines. These rules are scoped under the
-   .add-student-container .card hierarchy and use !important to be robust. */
-.add-student-container .card .class-assign .class-item {
-  display: flex !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
-  gap: 1rem !important;
-}
-.add-student-container .card .class-assign .class-left,
-.add-student-container .card .class-assign label {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 0 !important;
-  white-space: nowrap !important;
-}
-.add-student-container .card .class-assign .class-left {
-  justify-content: flex-start !important;
-  padding-left: 0 !important;
-}
-.add-student-container .card .class-assign .class-left {
-  /* Force horizontal layout for class-left (some other styles set column) */
-  flex-direction: row !important;
-  align-items: center !important;
-}
-.add-student-container .card .class-assign .class-left strong,
-.add-student-container .card .class-assign .class-left b {
-  display: inline-block !important;
-  vertical-align: middle !important;
-  line-height: 1 !important;
-}
-.add-student-container .card .class-assign .subject-list {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  overflow-x: auto !important;
-  white-space: nowrap !important;
-}
-.add-student-container .card .class-assign .class-left input[type="checkbox"],
-.add-student-container .card .class-assign .subject-list input[type="checkbox"] {
-  display: inline-block !important;
-  vertical-align: middle !important;
-  margin-right: 0 !important; /* gap handles spacing consistently */
-}
-
-
-
-/* ===== Edit Actions: Save & Cancel Buttons ===== */
+/* ===== Edit Actions ===== */
 .edit-actions {
   display: flex;
-  justify-content: flex-end; /* aligns buttons to the right side */
+  justify-content: flex-end;
   align-items: center;
-  gap: 1rem; /* professional and balanced gap between buttons */
+  gap: 1rem;
   margin-top: 1rem;
 }
 
-/* Save button (primary look) */
 .btn-save {
   background: var(--accent-green);
   color: #fff;
@@ -396,12 +286,12 @@ body {
   cursor: pointer;
   transition: var(--transition);
 }
+
 .btn-save:hover {
   background: #16a34a;
   transform: scale(1.03);
 }
 
-/* Cancel button (secondary look) */
 .btn-cancel {
   background: var(--accent-red);
   color: #fff;
@@ -412,21 +302,107 @@ body {
   cursor: pointer;
   transition: var(--transition);
 }
+
 .btn-cancel:hover {
   background: #dc2626;
   transform: scale(1.03);
 }
 
-/* Ensure consistent layout even in small screens */
+/* ===== Responsive Breakpoints ===== */
+
+/* Tablets (≤ 992px) */
+@media (max-width: 992px) {
+  .card {
+    padding: 1.5rem;
+  }
+
+  .class-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .subject-list {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+}
+
+/* Mobiles (≤ 600px) */
 @media (max-width: 600px) {
-  .edit-actions {
+  .add-student-container {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.2rem;
+    border-radius: 12px;
+  }
+
+  .card h2 {
+    font-size: 1.3rem;
+  }
+
+  .add-student-form input,
+  .add-student-form select,
+  .add-student-form button {
+    font-size: 0.9rem;
+  }
+
+  .class-assign {
+    padding: 0.8rem;
+  }
+
+  .class-item {
+    gap: 0.6rem;
+  }
+
+  .subject-list {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .user-card {
+    padding: 0.8rem;
+  }
+
+  .user-card .user-view {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .actions {
     justify-content: center;
     gap: 0.8rem;
+  }
+
+  .edit-actions {
+    justify-content: center;
     flex-wrap: wrap;
   }
 }
 
-/* Strong override: ensure the Add Student page card uses the requested gradient */
+/* Small Phones (≤ 400px) */
+@media (max-width: 400px) {
+  .card {
+    padding: 1rem;
+  }
+
+  .add-student-form button {
+    padding: 0.6rem;
+  }
+
+  .class-left {
+    flex: 1 1 100%;
+  }
+
+  .subject-item {
+    font-size: 0.8rem;
+  }
+}
+
+/* Ensure gradient consistency */
 .add-student-container.container > .card {
   background: linear-gradient(145deg, #0d111a 0%, #121826 100%) !important;
 }
