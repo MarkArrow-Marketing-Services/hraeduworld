@@ -135,22 +135,23 @@ body {
 
 /* Each grade row */
 .class-item {
-  display: flex;
+  /* Use grid so left (grade) and subjects sit on the same row reliably */
+  display: grid;
+  grid-template-columns: auto 1fr; /* grade column + subject column */
   align-items: center;
-  gap: 2rem;
-  padding: 0.5rem 0.8rem;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-  flex-wrap: wrap;
+  gap: 1rem; /* space between grade and subjects */
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
 }
 
 /* Grade section */
 .class-left {
   display: flex;
   align-items: center;
-  gap: 6px;
-  flex: 0 0 160px;
-  min-width: 140px;
-  white-space: nowrap;
+  gap: 8px;
+  flex: 0 0 auto; /* size to content so subjects flow next to it */
+  min-width: 0;
+  white-space: nowrap; /* keep grade label on one line */
   justify-content: flex-start;
   text-align: left;
 }
@@ -158,17 +159,17 @@ body {
 .class-left input[type="checkbox"] {
   accent-color: var(--accent-blue);
   cursor: pointer;
+  margin: 0; /* tighten spacing around checkbox */
 }
 
 /* Subject section */
 .subject-list {
   display: flex;
-  flex-wrap: wrap;
+  flex: 1 1 auto; /* take remaining space so subjects sit next to the grade */
+  flex-wrap: wrap; /* wrap subjects onto next line only if needed */
   align-items: center;
-  gap: 1rem;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent-purple) transparent;
+  gap: 0.75rem;
+  overflow-x: hidden; /* avoid horizontal scroll under normal conditions */
 }
 
 .subject-list::-webkit-scrollbar {
@@ -185,7 +186,11 @@ body {
   align-items: center;
   gap: 6px;
   font-size: 0.9rem;
-  white-space: nowrap;
+  white-space: nowrap; /* keep each subject checkbox+label together */
+}
+
+.subject-item input[type="checkbox"] {
+  margin: 0; /* tighten checkbox spacing */
 }
 
 /* ===== User List Section ===== */
@@ -316,15 +321,26 @@ body {
     padding: 1.5rem;
   }
 
+  /* Keep class and its subjects inline when possible on tablets; allow wrapping if space is tight */
+  /* keep the grid on tablets but allow subjects to wrap within their column */
   .class-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .class-left {
+    flex: 0 0 120px;
+    min-width: 100px;
+    white-space: nowrap;
   }
 
   .subject-list {
+    flex: 1 1 auto;
     flex-wrap: wrap;
     gap: 0.8rem;
+    overflow-x: hidden;
   }
 }
 
@@ -353,8 +369,12 @@ body {
     padding: 0.8rem;
   }
 
+  /* On smaller phones keep grid but allow tighter gaps */
   .class-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
     gap: 0.6rem;
+    align-items: center;
   }
 
   .subject-list {
@@ -393,8 +413,16 @@ body {
     padding: 0.6rem;
   }
 
+  /* Stack grade above subjects on very small phones */
+  .class-item {
+    grid-template-columns: 1fr;
+    grid-row-gap: 0.4rem;
+  }
+
   .class-left {
+    display: flex;
     flex: 1 1 100%;
+    white-space: nowrap;
   }
 
   .subject-item {
