@@ -36,7 +36,7 @@ const StudentUnits = () => {
   const fetchDetailedProgress = async () => {
     try {
       const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/student/progress-detailed",
+        `${import.meta.env.VITE_BACKEND_URL}/api/student/progress-detailed`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -54,7 +54,7 @@ const StudentUnits = () => {
   const fetchEnrolledClasses = async () => {
     try {
       const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/student/classes",
+        `${import.meta.env.VITE_BACKEND_URL}/api/student/classes`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -69,7 +69,7 @@ const StudentUnits = () => {
   const fetchSubjects = async (classId) => {
     try {
       const res = await axios.get(
-        `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/subjects/${classId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -84,7 +84,7 @@ const StudentUnits = () => {
   const fetchUnits = async (subjectId) => {
     try {
       const res = await axios.get(
-        `https://hraeduworld-backend.onrender.com/api/units/${subjectId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/units/${subjectId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -95,7 +95,7 @@ const StudentUnits = () => {
         unitsData.map(async (u) => {
           try {
             const qres = await axios.get(
-              `https://hraeduworld-backend.onrender.com/api/quizzes/${u._id}`,
+              `${import.meta.env.VITE_BACKEND_URL}/api/quizzes/${u._id}`,
               { headers: { Authorization: `Bearer ${auth.token}` } }
             );
             const qdata = qres.data;
@@ -190,7 +190,7 @@ const StudentUnits = () => {
                         className="resource-button"
                         onClick={() =>
                           setPlaying({
-                            url: `https://hraeduworld-backend.onrender.com${
+                            url: `${import.meta.env.VITE_BACKEND_URL}${
                               video.url || video
                             }`,
                             name: video.name || `Video ${idx + 1}`,
@@ -239,7 +239,9 @@ const StudentUnits = () => {
                       onClick={async () => {
                         try {
                           const res = await axios.post(
-                            "https://hraeduworld-backend.onrender.com/api/student/resource-progress",
+                            `${
+                              import.meta.env.VITE_BACKEND_URL
+                            }/api/student/resource-progress`,
                             {
                               unitId: selectedUnit._id,
                               resourceType: "pdf",
@@ -266,7 +268,7 @@ const StudentUnits = () => {
                             } catch (e) {}
                           } catch (e) {}
                           window.open(
-                            `https://hraeduworld-backend.onrender.com${
+                            `${import.meta.env.VITE_BACKEND_URL}${
                               pdf.url || pdf
                             }`,
                             "_blank"
@@ -306,6 +308,12 @@ const StudentUnits = () => {
                     navigate(q);
                   }}
                   className="take-quiz-btn"
+                  disabled={selectedUnit.quiz?.enabled === false}
+                  title={
+                    selectedUnit.quiz?.enabled === false
+                      ? "This quiz is currently disabled"
+                      : "Take the quiz"
+                  }
                 >
                   Take Quiz
                 </button>
@@ -327,13 +335,15 @@ const StudentUnits = () => {
             <video
               className="player-video"
               controls
-              controlsList="nodownload"
+              controlsList="nodownload noplaybackrate"
               disablePictureInPicture
               onContextMenu={(e) => e.preventDefault()}
               onEnded={async () => {
                 try {
                   const res = await axios.post(
-                    "https://hraeduworld-backend.onrender.com/api/student/resource-progress",
+                    `${
+                      import.meta.env.VITE_BACKEND_URL
+                    }/api/student/resource-progress`,
                     {
                       unitId: selectedUnit._id,
                       resourceType: "video",

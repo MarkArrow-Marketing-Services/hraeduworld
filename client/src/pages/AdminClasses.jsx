@@ -18,7 +18,7 @@ const AdminClasses = () => {
   const fetchClasses = async () => {
     try {
       const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/classes",
+        `${import.meta.env.VITE_BACKEND_URL}/api/classes`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -34,7 +34,7 @@ const AdminClasses = () => {
     try {
       if (editing) {
         await axios.put(
-          `https://hraeduworld-backend.onrender.com/api/classes/${editing}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/classes/${editing}`,
           { name },
           { headers: { Authorization: `Bearer ${auth.token}` } }
         );
@@ -42,7 +42,7 @@ const AdminClasses = () => {
         setEditing(null);
       } else {
         await axios.post(
-          "https://hraeduworld-backend.onrender.com/api/classes",
+          `${import.meta.env.VITE_BACKEND_URL}/api/classes`,
           { name },
           { headers: { Authorization: `Bearer ${auth.token}` } }
         );
@@ -64,7 +64,7 @@ const AdminClasses = () => {
     if (!window.confirm("Are you sure you want to delete this class?")) return;
     try {
       await axios.delete(
-        `https://hraeduworld-backend.onrender.com/api/classes/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/classes/${id}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }

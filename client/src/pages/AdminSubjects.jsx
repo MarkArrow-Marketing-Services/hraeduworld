@@ -33,7 +33,7 @@ const AdminSubjects = () => {
   const fetchClasses = async () => {
     try {
       const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/classes",
+        `${import.meta.env.VITE_BACKEND_URL}/api/classes`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -49,7 +49,7 @@ const AdminSubjects = () => {
   const fetchSubjects = async (classId) => {
     try {
       const res = await axios.get(
-        `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/subjects/${classId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -68,7 +68,7 @@ const AdminSubjects = () => {
     }
     try {
       await axios.post(
-        "https://hraeduworld-backend.onrender.com/api/subjects",
+        `${import.meta.env.VITE_BACKEND_URL}/api/subjects`,
         {
           name: subjectName,
           description: subjectDescription,
@@ -101,7 +101,7 @@ const AdminSubjects = () => {
   const saveEdit = async (id) => {
     try {
       await axios.put(
-        `https://hraeduworld-backend.onrender.com/api/subjects/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/subjects/${id}`,
         editValues,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
@@ -119,7 +119,7 @@ const AdminSubjects = () => {
     if (!window.confirm("Delete this subject?")) return;
     try {
       await axios.delete(
-        `https://hraeduworld-backend.onrender.com/api/subjects/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/subjects/${id}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }

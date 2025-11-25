@@ -82,4 +82,11 @@ router.get(
   require("../controllers/adminController").getStudentQuizHistoryById
 );
 
+// Export user credentials for Excel
+router.get(
+  "/export/credentials",
+  protect(["admin"]),
+  require("../controllers/adminController").exportUserCredentials
+);
+
 module.exports = router;

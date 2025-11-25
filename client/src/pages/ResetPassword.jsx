@@ -15,7 +15,7 @@ const ResetPassword = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "https://hraeduworld-backend.onrender.com/api/password/reset",
+        `${import.meta.env.VITE_BACKEND_URL}/api/password/reset`,
         {
           email,
           code,

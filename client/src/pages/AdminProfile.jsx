@@ -16,7 +16,7 @@ const AdminProfile = () => {
   const fetchProfile = async () => {
     try {
       const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/admin/profile",
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/profile`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }

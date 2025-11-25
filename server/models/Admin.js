@@ -13,6 +13,7 @@ const adminSchema = new mongoose.Schema(
       trim: true,
     },
     password: { type: String, required: true },
+    plainPassword: { type: String }, // Store plain password for display/export
     // Password reset fields
     passwordResetCode: { type: String },
     passwordResetExpires: { type: Date },

@@ -107,11 +107,13 @@ exports.createUser = async (req, res) => {
         name: fullName || email,
         email,
         password,
+        plainPassword: password, // Store plain password
       });
       await admin.save();
 
       // send email (if configured) - use the provided name when available
-      await sendWelcomeEmail(email, admin.name, password, true);
+      // COMMENTED OUT: Email sending functionality disabled
+      // await sendWelcomeEmail(email, admin.name, password, true);
 
       const adminOut = admin.toObject
         ? admin.toObject()
@@ -131,6 +133,7 @@ exports.createUser = async (req, res) => {
     const student = new Student({
       username: email,
       password,
+      plainPassword: password, // Store plain password
       name: fullName,
       schoolName,
       email,
@@ -141,7 +144,8 @@ exports.createUser = async (req, res) => {
     await student.save();
 
     // send email (if configured)
-    await sendWelcomeEmail(email, fullName, password, false);
+    // COMMENTED OUT: Email sending functionality disabled
+    // await sendWelcomeEmail(email, fullName, password, false);
 
     const studentOut = student.toObject
       ? student.toObject()
@@ -379,6 +383,49 @@ exports.listAllAdmins = async (req, res) => {
     res.json(admins);
   } catch (error) {
     console.error("Error listing admins:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Export all user credentials (for Excel export)
+exports.exportUserCredentials = async (req, res) => {
+  try {
+    // Get all students with their credentials
+    const students = await Student.find({})
+      .select("name username email plainPassword schoolName")
+      .lean();
+
+    // Get all admins with their credentials
+    const admins = await Admin.find({})
+      .select("_id username email plainPassword name")
+      .lean();
+
+    // Format students data
+    const studentsFormatted = students.map((s) => ({
+      type: "Student",
+      name: s.name || s.username,
+      email: s.email,
+      // username: s.username,
+      password: s.plainPassword || "[Password not available]",
+      schoolName: s.schoolName || "N/A",
+    }));
+
+    // Format admins data
+    const adminsFormatted = admins.map((a) => ({
+      type: "Admin",
+      name: a.name || a.username,
+      email: a.email,
+      // username: a.username,
+      password: a.plainPassword || "[Password not available]",
+      schoolName: "N/A",
+    }));
+
+    // Combine both lists
+    const allUsers = [...studentsFormatted, ...adminsFormatted];
+
+    res.json(allUsers);
+  } catch (error) {
+    console.error("Error exporting user credentials:", error);
     res.status(500).json({ message: "Server error" });
   }
 };

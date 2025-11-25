@@ -19,7 +19,7 @@ const StudentProfile = () => {
   const fetchProfile = async () => {
     try {
       const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/student/profile",
+        `${import.meta.env.VITE_BACKEND_URL}/api/student/profile`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -43,7 +43,7 @@ const StudentProfile = () => {
     e.preventDefault();
     try {
       await axios.put(
-        "https://hraeduworld-backend.onrender.com/api/student/profile",
+        `${import.meta.env.VITE_BACKEND_URL}/api/student/profile`,
         form,
         {
           headers: { Authorization: `Bearer ${auth.token}` },

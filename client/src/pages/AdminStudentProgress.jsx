@@ -19,7 +19,7 @@ const AdminStudentProgress = () => {
   const fetchStudents = async () => {
     try {
       const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/admin/students",
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/students`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -37,13 +37,17 @@ const AdminStudentProgress = () => {
     try {
       const [dRes, qRes] = await Promise.all([
         axios.get(
-          `https://hraeduworld-backend.onrender.com/api/admin/students/${s._id}/progress`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/admin/students/${
+            s._id
+          }/progress`,
           {
             headers: { Authorization: `Bearer ${auth.token}` },
           }
         ),
         axios.get(
-          `https://hraeduworld-backend.onrender.com/api/admin/students/${s._id}/quiz-history`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/admin/students/${
+            s._id
+          }/quiz-history`,
           {
             headers: { Authorization: `Bearer ${auth.token}` },
           }

@@ -28,7 +28,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://hraeduworld-backend.onrender.com/api/auth/login",
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
         { username, password }
       );
       login(response.data.token, response.data.role);

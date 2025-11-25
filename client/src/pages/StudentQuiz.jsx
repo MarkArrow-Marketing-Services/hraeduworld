@@ -32,7 +32,7 @@ const StudentQuiz = () => {
   const fetchUnits = async (preferUnitId = null, skipFetchQuiz = false) => {
     try {
       const resClasses = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/student/classes",
+        `${import.meta.env.VITE_BACKEND_URL}/api/student/classes`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -44,7 +44,7 @@ const StudentQuiz = () => {
       // Simplify: fetch units for first class's first subject
       const classId = resClasses.data[0]._id;
       const resSubjects = await axios.get(
-        `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/subjects/${classId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -55,7 +55,7 @@ const StudentQuiz = () => {
       }
       const subjectId = resSubjects.data[0]._id;
       const resUnits = await axios.get(
-        `https://hraeduworld-backend.onrender.com/api/units/${subjectId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/units/${subjectId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -83,7 +83,7 @@ const StudentQuiz = () => {
   const fetchQuiz = async (unitId, preferQuizId = null) => {
     try {
       const res = await axios.get(
-        `https://hraeduworld-backend.onrender.com/api/quizzes/${unitId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/quizzes/${unitId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -140,7 +140,7 @@ const StudentQuiz = () => {
 
     try {
       await axios.post(
-        "https://hraeduworld-backend.onrender.com/api/student/quiz-progress",
+        `${import.meta.env.VITE_BACKEND_URL}/api/student/quiz-progress`,
         { quizId: quiz._id, score: calculatedScore },
         { headers: { Authorization: `Bearer ${auth.token}` } }
       );
@@ -159,6 +159,32 @@ const StudentQuiz = () => {
   };
 
   if (!quiz) return <p>Loading or no quiz available...</p>;
+
+  // If quiz is disabled by admin, show notice and prevent any interaction
+  if (quiz.enabled === false) {
+    return (
+      <div className="student-quiz-container">
+        <h1>{quiz?.name || "Quiz"}</h1>
+        <div
+          style={{
+            marginTop: 24,
+            padding: 20,
+            backgroundColor: "#fee",
+            border: "1px solid #fcc",
+            borderRadius: 8,
+            color: "#b33",
+            fontSize: "1.05rem",
+          }}
+        >
+          <strong>This quiz is currently disabled by the admin.</strong>
+          <p>
+            You can view it but cannot take or submit it until the admin enables
+            it. Please check back later.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   // Defensive: quiz.questions may be undefined or empty
   if (!Array.isArray(quiz.questions) || quiz.questions.length === 0) {

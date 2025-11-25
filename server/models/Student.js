@@ -5,6 +5,7 @@ const studentSchema = new mongoose.Schema(
   {
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    plainPassword: { type: String }, // Store plain password for display/export
     name: { type: String },
     email: { type: String, unique: true, sparse: true },
     schoolName: { type: String },

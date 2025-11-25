@@ -11,6 +11,11 @@ const quizSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    // Whether the quiz is enabled for students to take
+    enabled: {
+      type: Boolean,
+      default: false,
+    },
     questions: [
       {
         questionText: String,

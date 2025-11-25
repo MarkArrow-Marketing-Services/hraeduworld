@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 import AuthContext from "../context/AuthContext";
 import "../styles/theme.css";
 import "../styles/AdminQuizzes.css";
@@ -55,7 +55,7 @@ const AdminQuizzes = () => {
   const fetchClasses = async () => {
     try {
       const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/classes",
+        `${import.meta.env.VITE_BACKEND_URL}/api/classes`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -70,7 +70,7 @@ const AdminQuizzes = () => {
   const fetchSubjects = async (classId) => {
     try {
       const res = await axios.get(
-        `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/subjects/${classId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -85,7 +85,7 @@ const AdminQuizzes = () => {
   const fetchUnits = async (subjectId) => {
     try {
       const res = await axios.get(
-        `https://hraeduworld-backend.onrender.com/api/units/${subjectId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/units/${subjectId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -100,7 +100,7 @@ const AdminQuizzes = () => {
   const fetchQuizzes = async (unitId) => {
     try {
       const res = await axios.get(
-        `https://hraeduworld-backend.onrender.com/api/quizzes/${unitId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/quizzes/${unitId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -167,7 +167,7 @@ const AdminQuizzes = () => {
     }
     try {
       await axios.post(
-        "https://hraeduworld-backend.onrender.com/api/quizzes",
+        `${import.meta.env.VITE_BACKEND_URL}/api/quizzes`,
         { unitId: selectedUnit, questions: createQuestions, name: quizName },
         { headers: { Authorization: `Bearer ${auth.token}` } }
       );
@@ -305,6 +305,45 @@ const AdminQuizzes = () => {
                   </div>
 
                   <div className="quiz-item-actions">
+                    <label
+                      className="toggle-switch"
+                      title={q.enabled ? "Disable quiz" : "Enable quiz"}
+                    >
+                      <input
+                        type="checkbox"
+                        className="toggle-input"
+                        checked={Boolean(q.enabled)}
+                        onChange={async () => {
+                          try {
+                            // Use central axios baseURL and interceptor (token attached automatically)
+                            const res = await axios.put(
+                              `/api/quizzes/${q._id}/toggle`
+                            );
+                            setQuizzes((prev) =>
+                              prev.map((qq) =>
+                                qq._id === res.data._id ? res.data : qq
+                              )
+                            );
+                            toast.success(
+                              `Quiz ${
+                                res.data.enabled ? "enabled" : "disabled"
+                              }`
+                            );
+                          } catch (err) {
+                            console.error(
+                              "toggle quiz error",
+                              err.response || err
+                            );
+                            toast.error(
+                              err.response?.data?.message ||
+                                "Failed to toggle quiz"
+                            );
+                          }
+                        }}
+                        aria-label={q.enabled ? "Disable quiz" : "Enable quiz"}
+                      />
+                      <span className="toggle-slider" />
+                    </label>
                     <button
                       className="btn btn-edit-quiz"
                       onClick={() => {
@@ -332,7 +371,9 @@ const AdminQuizzes = () => {
                         if (!confirm("Delete this quiz?")) return;
                         try {
                           await axios.delete(
-                            `https://hraeduworld-backend.onrender.com/api/quizzes/${q._id}`,
+                            `${import.meta.env.VITE_BACKEND_URL}/api/quizzes/${
+                              q._id
+                            }`,
                             {
                               headers: {
                                 Authorization: `Bearer ${auth.token}`,
@@ -421,7 +462,9 @@ const AdminQuizzes = () => {
             onClick={async () => {
               try {
                 await axios.put(
-                  `https://hraeduworld-backend.onrender.com/api/quizzes/${editingQuizId}`,
+                  `${
+                    import.meta.env.VITE_BACKEND_URL
+                  }/api/quizzes/${editingQuizId}`,
                   { name: editingQuizName, questions: editQuestions },
                   { headers: { Authorization: `Bearer ${auth.token}` } }
                 );

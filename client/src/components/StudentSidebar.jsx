@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 import AuthContext from "../context/AuthContext";
 import "../styles/StudentSidebar.css";
 
@@ -25,12 +25,7 @@ const StudentSidebar = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await axios.get(
-          "https://hraeduworld-backend.onrender.com/api/student/classes",
-          {
-            headers: { Authorization: `Bearer ${auth.token}` },
-          }
-        );
+        const res = await axios.get("/api/student/classes");
         const classesWithSubjects = res.data || [];
 
         for (const c of classesWithSubjects) {
@@ -41,12 +36,7 @@ const StudentSidebar = () => {
             (Array.isArray(c.subjects) && c.subjects.some((s) => !(s && s._id)))
           ) {
             try {
-              const sres = await axios.get(
-                `https://hraeduworld-backend.onrender.com/api/subjects/${c._id}`,
-                {
-                  headers: { Authorization: `Bearer ${auth.token}` },
-                }
-              );
+              const sres = await axios.get(`/api/subjects/${c._id}`);
               c.subjects = sres.data || [];
             } catch (e) {
               c.subjects = [];
@@ -60,12 +50,7 @@ const StudentSidebar = () => {
               continue;
             }
             try {
-              const ures = await axios.get(
-                `https://hraeduworld-backend.onrender.com/api/units/${sid}`,
-                {
-                  headers: { Authorization: `Bearer ${auth.token}` },
-                }
-              );
+              const ures = await axios.get(`/api/units/${sid}`);
               s.unitCount = Array.isArray(ures.data) ? ures.data.length : 0;
             } catch (e) {
               s.unitCount = 0;
@@ -76,12 +61,7 @@ const StudentSidebar = () => {
         setClasses(classesWithSubjects);
 
         try {
-          const pres = await axios.get(
-            "https://hraeduworld-backend.onrender.com/api/student/progress-detailed",
-            {
-              headers: { Authorization: `Bearer ${auth.token}` },
-            }
-          );
+          const pres = await axios.get("/api/student/progress-detailed");
           setProgressTree(pres.data || null);
         } catch (e) {
           // non-critical: keep progressTree null if request fails
@@ -101,6 +81,34 @@ const StudentSidebar = () => {
     };
     if (auth.token) fetch();
   }, [auth.token]);
+
+  // Refresh progress when student updates progress (quizzes, resources, etc.)
+  useEffect(() => {
+    const refreshProgress = async () => {
+      try {
+        const pres = await axios.get("/api/student/progress-detailed");
+        setProgressTree(pres.data || null);
+      } catch (e) {
+        console.error("Error refreshing progress:", e);
+      }
+    };
+
+    // Listen for custom events fired from other components when progress updates
+    window.addEventListener("student-progress-updated", refreshProgress);
+
+    // Listen for localStorage changes (for cross-tab updates)
+    const onStorage = (e) => {
+      if (e.key === "student-progress-updated") {
+        refreshProgress();
+      }
+    };
+    window.addEventListener("storage", onStorage);
+
+    return () => {
+      window.removeEventListener("student-progress-updated", refreshProgress);
+      window.removeEventListener("storage", onStorage);
+    };
+  }, []);
 
   // toggle expand for class row
   const toggleExpand = (id) => setExpanded((s) => ({ ...s, [id]: !s[id] }));

@@ -19,7 +19,7 @@ const VerifyCode = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "https://hraeduworld-backend.onrender.com/api/password/verify-code",
+        `${import.meta.env.VITE_BACKEND_URL}/api/password/verify-code`,
         {
           email,
           code,

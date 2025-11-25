@@ -30,8 +30,8 @@ const Navbar = () => {
       try {
         const endpoint =
           auth?.role === "student"
-            ? "https://hraeduworld-backend.onrender.com/api/student/profile"
-            : "https://hraeduworld-backend.onrender.com/api/admin/profile";
+            ? `${import.meta.env.VITE_BACKEND_URL}/api/student/profile`
+            : `${import.meta.env.VITE_BACKEND_URL}/api/admin/profile`;
 
         const res = await axios.get(endpoint, {
           headers: { Authorization: `Bearer ${auth.token}` },

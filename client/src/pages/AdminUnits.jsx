@@ -43,7 +43,7 @@ const AdminUnits = () => {
   const fetchClasses = async () => {
     try {
       const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/classes",
+        `${import.meta.env.VITE_BACKEND_URL}/api/classes`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -58,7 +58,7 @@ const AdminUnits = () => {
   const fetchSubjects = async (classId) => {
     try {
       const res = await axios.get(
-        `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/subjects/${classId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -73,7 +73,7 @@ const AdminUnits = () => {
   const fetchUnits = async (subjectId) => {
     try {
       const res = await axios.get(
-        `https://hraeduworld-backend.onrender.com/api/units/${subjectId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/units/${subjectId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -88,7 +88,7 @@ const AdminUnits = () => {
     if (!window.confirm("Delete this unit?")) return;
     try {
       await axios.delete(
-        `https://hraeduworld-backend.onrender.com/api/units/delete/${unitId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/units/delete/${unitId}`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -179,7 +179,7 @@ const AdminUnits = () => {
       }
 
       const response = await axios.put(
-        `https://hraeduworld-backend.onrender.com/api/units/update/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/units/update/${id}`,
         formData,
         {
           headers: {
@@ -299,7 +299,7 @@ const AdminUnits = () => {
 
     try {
       await axios.post(
-        "https://hraeduworld-backend.onrender.com/api/units",
+        `${import.meta.env.VITE_BACKEND_URL}/api/units`,
         formData,
         {
           headers: {
@@ -633,7 +633,9 @@ const AdminUnits = () => {
                               className="resource-link"
                               onClick={() =>
                                 setPlaying({
-                                  url: `https://hraeduworld-backend.onrender.com${video.url}`,
+                                  url: `${import.meta.env.VITE_BACKEND_URL}${
+                                    video.url
+                                  }`,
                                   name: video.name,
                                 })
                               }
@@ -653,7 +655,9 @@ const AdminUnits = () => {
                           </div>
                           <div>
                             <a
-                              href={`https://hraeduworld-backend.onrender.com${pdf.url}`}
+                              href={`${import.meta.env.VITE_BACKEND_URL}${
+                                pdf.url
+                              }`}
                               target="_blank"
                               rel="noreferrer"
                             >

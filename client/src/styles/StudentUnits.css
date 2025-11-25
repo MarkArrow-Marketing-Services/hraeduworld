@@ -8,7 +8,10 @@
 .unit-detail{margin-top:12px}
 .resource-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .resource-button{background:none;border:none;color:var(--accent-2);cursor:pointer}
-.take-quiz-btn{padding:6px 12px;background:var(--accent-2);color:#fff;border:none;border-radius:6px}
+.take-quiz-btn{padding:6px 12px;background:var(--accent-2);color:#fff;border:none;border-radius:6px;cursor:pointer;transition:all 200ms ease;font-weight:600}
+.take-quiz-btn:hover:not(:disabled){background:#00d4ff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,212,255,0.3)}
+.take-quiz-btn:active:not(:disabled){transform:translateY(0)}
+.take-quiz-btn:disabled{background:#999;color:#ddd;cursor:not-allowed;opacity:0.6;box-shadow:none}
 .player-backdrop{
 	position:fixed;
 	left:0;

@@ -90,6 +90,15 @@
 .admin-quizzes-container .quiz-item-main{display:flex;align-items:center;gap:8px;color:var(--qq-form-text);font-size:0.98rem}
 .admin-quizzes-container .quiz-item-actions{display:flex;align-items:center;gap:8px}
 
+/* Toggle switch */
+.toggle-switch{position:relative;display:inline-block;width:54px;height:30px}
+.toggle-switch .toggle-input{opacity:0;width:0;height:0}
+.toggle-switch .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;transition:0.2s;border-radius:30px}
+.toggle-switch .toggle-slider:before{position:absolute;content:"";height:24px;width:24px;left:3px;top:3px;background:white;transition:0.2s;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.2)}
+.toggle-switch .toggle-input:checked + .toggle-slider{background:linear-gradient(90deg,#10b981,#059669)}
+.toggle-switch .toggle-input:checked + .toggle-slider:before{transform:translateX(24px)}
+
+
 /* Edit button (subtle primary/purple) */
 .admin-quizzes-container .btn-edit-quiz{background:linear-gradient(90deg,#7c3aed,#5b21b6);color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
 .admin-quizzes-container .btn-edit-quiz:hover{filter:brightness(0.98);transform:translateY(-1px)}

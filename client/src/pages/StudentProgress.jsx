@@ -16,7 +16,7 @@ const StudentProgress = () => {
   const fetchProgress = async () => {
     try {
       const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/student/progress",
+        `${import.meta.env.VITE_BACKEND_URL}/api/student/progress`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }
@@ -32,7 +32,7 @@ const StudentProgress = () => {
   const fetchQuizHistory = async () => {
     try {
       const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/student/quiz-history",
+        `${import.meta.env.VITE_BACKEND_URL}/api/student/quiz-history`,
         {
           headers: { Authorization: `Bearer ${auth.token}` },
         }

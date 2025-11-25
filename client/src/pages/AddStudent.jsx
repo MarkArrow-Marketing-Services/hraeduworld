@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import axios from "../utils/axiosConfig";
 import AuthContext from "../context/AuthContext";
 import { toast } from "react-hot-toast";
+import * as XLSX from "xlsx";
 import "../styles/AddStudent.css";
 import "../styles/theme.css";
 
@@ -35,12 +36,7 @@ const AddStudent = () => {
 
   const fetchClasses = async () => {
     try {
-      const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/classes",
-        {
-          headers: { Authorization: `Bearer ${auth.token}` },
-        }
-      );
+      const res = await axios.get("/api/classes");
       setClasses(res.data);
     } catch {
       toast.error("Failed to fetch classes");
@@ -49,10 +45,7 @@ const AddStudent = () => {
 
   const fetchSubjectsForClass = async (classId) => {
     try {
-      const res = await axios.get(
-        `https://hraeduworld-backend.onrender.com/api/subjects/${classId}`,
-        { headers: { Authorization: `Bearer ${auth.token}` } }
-      );
+      const res = await axios.get(`/api/subjects/${classId}`);
       return res.data;
     } catch {
       return [];
@@ -178,13 +171,7 @@ const AddStudent = () => {
         classIds: selectedClasses,
         subjectIds: selectedSubjectIds,
       };
-      await axios.post(
-        "https://hraeduworld-backend.onrender.com/api/admin/create-user",
-        payload,
-        {
-          headers: { Authorization: `Bearer ${auth.token}` },
-        }
-      );
+      await axios.post("/api/admin/create-user", payload);
       toast.success(
         `${
           role === "admin" ? "Admin" : "Student"
@@ -203,12 +190,7 @@ const AddStudent = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get(
-        "https://hraeduworld-backend.onrender.com/api/admin/users",
-        {
-          headers: { Authorization: `Bearer ${auth.token}` },
-        }
-      );
+      const res = await axios.get("/api/admin/users");
       setStudentsList(res.data || []);
     } catch {
       toast.error("Failed to fetch students");
@@ -247,12 +229,10 @@ const AddStudent = () => {
 
       const url =
         editRole === "admin"
-          ? `https://hraeduworld-backend.onrender.com/api/admin/admins/${id}`
-          : `https://hraeduworld-backend.onrender.com/api/admin/students/${id}`;
+          ? `/api/admin/admins/${id}`
+          : `/api/admin/students/${id}`;
 
-      await axios.put(url, payload, {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      await axios.put(url, payload);
 
       toast.success(editRole === "admin" ? "Admin updated" : "Student updated");
       cancelEdit();
@@ -267,17 +247,55 @@ const AddStudent = () => {
     try {
       const url =
         role === "admin"
-          ? `https://hraeduworld-backend.onrender.com/api/admin/admins/${id}`
-          : `https://hraeduworld-backend.onrender.com/api/admin/students/${id}`;
+          ? `/api/admin/admins/${id}`
+          : `/api/admin/students/${id}`;
 
-      await axios.delete(url, {
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      await axios.delete(url);
 
       toast.success("User deleted");
       fetchStudents();
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to delete user");
+    }
+  };
+
+  const downloadUserCredentials = async () => {
+    try {
+      toast.loading("Generating Excel file...");
+      const res = await axios.get("/api/admin/export/credentials");
+
+      const data = res.data;
+
+      // Create a new workbook
+      const ws = XLSX.utils.json_to_sheet(data);
+
+      // Set column widths for better readability
+      const colWidths = [
+        { wch: 10 }, // type
+        { wch: 30 }, // name
+        { wch: 40 }, // email
+        // { wch: 25 }, // username
+        { wch: 30 }, // password
+        { wch: 40 }, // schoolName
+      ];
+      ws["!cols"] = colWidths;
+
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "User Credentials");
+
+      // Generate filename with timestamp
+      const timestamp = new Date().toISOString().slice(0, 10);
+      const filename = `User_Credentials_${timestamp}.xlsx`;
+
+      // Download the file
+      XLSX.writeFile(wb, filename);
+      toast.dismiss();
+      toast.success("Excel file downloaded successfully!");
+    } catch (error) {
+      toast.dismiss();
+      toast.error(
+        error.response?.data?.message || "Failed to download credentials"
+      );
     }
   };
 
@@ -415,7 +433,31 @@ const AddStudent = () => {
 
         {/* Student List */}
         <div className="student-list card">
-          <h3>Students</h3>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "20px",
+            }}
+          >
+            <h3>Students & Admins</h3>
+            <button
+              type="button"
+              onClick={downloadUserCredentials}
+              style={{
+                padding: "8px 16px",
+                backgroundColor: "#1890ff",
+                color: "white",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontWeight: "500",
+              }}
+            >
+              ⬇ Get User Credentials
+            </button>
+          </div>
           <input
             placeholder="Search by name or email"
             value={searchQuery}
