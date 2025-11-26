@@ -186,6 +186,13 @@
   align-items: center;
 }
 
+.modal-header h2 {
+  margin: 0;
+  color:#444;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
 .close-btn {
   background: transparent;
   border: none;
@@ -204,9 +211,10 @@
 }
 
 .modal-subtitle {
-  color: var(--accent);
+  color: var(--text-light);
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 /* --- Table --- */
@@ -236,4 +244,83 @@
 
 .quiz-table tr:hover {
   background: rgba(59, 130, 246, 0.08);
+}
+
+/* --- Academy Header (modal) --- */
+.academy-header {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.academy-title {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.academy-tagline {
+  margin: 0.15rem 0 0;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.academy-subtag {
+  margin: 0.15rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.modal-header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.download-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.45rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.download-btn:hover {
+  background: var(--accent-hover);
+}
+
+.modal-footer {
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--border-light);
+  padding-top: 1rem;
+}
+
+.signatures {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.signature-block {
+  flex: 1;
+  text-align: center;
+}
+
+.signature-line {
+  margin-bottom: 0.4rem;
+  color: var(--text-muted);
+}
+
+.signature-label {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.academy-address {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
