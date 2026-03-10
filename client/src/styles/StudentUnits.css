@@ -1,53 +1,296 @@
-.student-units-container{padding:20px}
-.unit-list{margin-top:12px}
-.unit-list ul{list-style:none;padding:0;margin:0}
-.unit-item{cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:6px}
-.unit-item.selected{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)}
-.title-row{display:flex;gap:12px;align-items:center}
-.status-badge{font-size:12px;color:var(--accent-2)}
-.unit-detail{margin-top:12px}
-.resource-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.resource-button{background:none;border:none;color:var(--accent-2);cursor:pointer}
-.take-quiz-btn{padding:6px 12px;background:var(--accent-2);color:#fff;border:none;border-radius:6px;cursor:pointer;transition:all 200ms ease;font-weight:600}
-.take-quiz-btn:hover:not(:disabled){background:#00d4ff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,212,255,0.3)}
-.take-quiz-btn:active:not(:disabled){transform:translateY(0)}
-.take-quiz-btn:disabled{background:#999;color:#ddd;cursor:not-allowed;opacity:0.6;box-shadow:none}
-.player-backdrop{
-	position:fixed;
-	left:0;
-	top:0;
-	right:0;
-	bottom:0;
-	background:rgba(0,0,0,0.65);
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	z-index:9999;
-	padding:16px;
+/* =====================================================
+   Student Units – Dark UI (Full Actions Design)
+   ===================================================== */
+
+/* ---------- Container ---------- */
+.student-units-container {
+  padding: clamp(0.8rem, 3vw, 1.6rem);
+  color: var(--text);
+  font-family: var(--font-sans);
 }
 
-.player-box{
-	background:linear-gradient(180deg,#171923,#0f1724);
-	color:#e5e7eb;
-	padding:12px;
-	border-radius:10px;
-	width:100%;
-	max-width:960px; /* constrain modal so it doesn't stretch too wide */
-	box-shadow:0 20px 40px rgba(2,6,23,0.7);
+/* ---------- Headings ---------- */
+.student-units-container h1 {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  margin-bottom: 1rem;
 }
 
-.player-box h4{margin:0 0 8px 0;color:#fff;font-size:1.05rem}
-
-.player-video{
-	width:100%;
-	height:auto;
-	max-height:80vh; /* avoid overflowing the viewport */
-	display:block;
-	background:#000; /* ensure black video background */
+.student-units-container h2 {
+  font-size: 1rem;
+  margin-bottom: 0.6rem;
 }
 
-.player-box .close-row{display:flex;justify-content:flex-end;margin-top:8px}
-.player-box .close-row button{background:transparent;border:1px solid rgba(255,255,255,0.08);color:#e5e7eb;padding:6px 10px;border-radius:6px;cursor:pointer}
+.student-units-container h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.3rem;
+}
 
-.pdf-viewer-wrap{width:100%;height:calc(80vh - 120px);overflow:hidden;border-radius:8px}
-.pdf-viewer{width:100%;height:100%;border:0;background:#fff}
+.student-units-container h4 {
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+}
+
+/* ---------- Unit List ---------- */
+.unit-list {
+  margin-top: 0.6rem;
+}
+
+.unit-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ---------- Unit Item ---------- */
+.unit-item {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
+  transition: var(--transition);
+  gap: 0.6rem;
+}
+
+.unit-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.unit-item.selected {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Title Row ---------- */
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.title-row span:first-child {
+  font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- Status Badge ---------- */
+.status-badge {
+  font-size: 0.68rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  white-space: nowrap;
+}
+
+/* ---------- Unit Detail ---------- */
+.unit-detail {
+  margin-top: 0.9rem;
+  padding: clamp(0.7rem, 2.5vw, 1rem);
+  background: var(--bg-surface);
+  border-radius: 14px;
+  border: 1px solid var(--border-light);
+}
+
+/* ---------- Resource Row ---------- */
+.resource-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+/* =====================================================
+   ACTION BUTTONS – Distinct Colors
+   ===================================================== */
+
+/* ---------- Explore Button (Yellow) ---------- */
+.resource-button {
+  background: transparent;
+  border: 1.4px solid var(--yellow);
+  color: var(--yellow);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.resource-button:hover {
+  background: rgba(250, 204, 21, 0.12);
+  box-shadow: 0 4px 10px rgba(250, 204, 21, 0.25);
+  transform: translateY(-1px);
+}
+
+/* ---------- Add Button (Blue) ---------- */
+.btn-add {
+  background: #3b82f6;
+  color: #fff;
+  border: 1.5px solid #3b82f6;
+}
+
+.btn-add:hover {
+  background: #60a5fa;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+  transform: translateY(-2px);
+}
+
+/* ---------- Update Button (Green) ---------- */
+.btn-update {
+  background: #10b981;
+  color: #fff;
+  border: 1.5px solid #10b981;
+}
+
+.btn-update:hover {
+  background: #34d399;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+  transform: translateY(-2px);
+}
+
+/* ---------- Delete Button (Red) ---------- */
+.btn-delete {
+  background: #ef4444;
+  color: #fff;
+  border: 1.5px solid #ef4444;
+}
+
+.btn-delete:hover {
+  background: #f87171;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+  transform: translateY(-2px);
+}
+
+/* ---------- Take Quiz Button (Blue) ---------- */
+.take-quiz-btn {
+  margin-top: 0.6rem;
+  padding: 0.45rem 1rem;
+  background: #3b82f6;
+  color: #fff;
+  border: 1.5px solid #3b82f6;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: clamp(0.75rem, 2vw, 0.85rem);
+  transition: var(--transition);
+}
+
+.take-quiz-btn:hover:not(:disabled) {
+  background: #60a5fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+}
+
+.take-quiz-btn:disabled {
+  color: var(--muted);
+  border-color: rgba(255, 255, 255, 0.2);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ---------- Muted Text ---------- */
+.muted {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* =====================================================
+   Video Player Modal
+   ===================================================== */
+
+.player-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.6rem, 3vw, 1rem);
+  z-index: 9999;
+}
+
+.player-box {
+  width: 100%;
+  max-width: min(960px, 96vw);
+  background: linear-gradient(180deg, #171923, #0f1724);
+  border-radius: 14px;
+  padding: clamp(0.7rem, 2vw, 1rem);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 20px 40px rgba(2, 6, 23, 0.7);
+}
+
+.player-box h4 {
+  margin-bottom: 0.5rem;
+  font-size: clamp(0.85rem, 2.4vw, 1rem);
+}
+
+/* ---------- Video ---------- */
+.player-video {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  border-radius: 10px;
+  background: #000;
+}
+
+/* ---------- Close Button ---------- */
+.player-box button {
+  background: transparent;
+  border: 1.3px solid rgba(255, 255, 255, 0.2);
+  color: var(--text);
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.player-box button:hover {
+  color: var(--red);
+  border-color: var(--red);
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* =====================================================
+   Mobile Screens
+   ===================================================== */
+@media (max-width: 480px) {
+  .unit-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .resource-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .resource-button,
+  .take-quiz-btn,
+  .btn-add,
+  .btn-update,
+  .btn-delete {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* =====================================================
+   Large Screens
+   ===================================================== */
+@media (min-width: 1200px) {
+  .student-units-container {
+    max-width: 1100px;
+    margin: auto;
+  }
+}
+/* happ birthday to you! I hope you have a fantastic day filled with joy and celebration. Cheers to another year of amazing */

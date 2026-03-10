@@ -445,15 +445,7 @@ const AddStudent = () => {
             <button
               type="button"
               onClick={downloadUserCredentials}
-              style={{
-                padding: "8px 16px",
-                backgroundColor: "#1890ff",
-                color: "white",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontWeight: "500",
-              }}
+              className="btn-download-credentials"
             >
               ⬇ Get User Credentials
             </button>
